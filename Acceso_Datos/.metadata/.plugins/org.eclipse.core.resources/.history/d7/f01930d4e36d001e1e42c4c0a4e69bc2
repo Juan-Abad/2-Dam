@@ -1,0 +1,11 @@
+package clases;
+
+import java.io.File;
+
+public class ad1_clases {
+	File file;
+	
+	public ad1_clases() {
+		file = new File(argumentos);
+	}
+}

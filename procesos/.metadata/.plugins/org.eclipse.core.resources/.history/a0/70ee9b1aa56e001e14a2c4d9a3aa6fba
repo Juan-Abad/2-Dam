@@ -1,0 +1,24 @@
+
+public class NumOculto {
+	private Integer numOculto;
+	private Boolean acertado = false;
+	
+	public NumOculto() {
+		this.numOculto = (int) (Math.random()*99+1);
+	}
+	
+	public int adviniarNumero(int numero) {
+		int resultado = 0;
+		if(numero == this.numOculto) {
+			resultado = 1;
+			acertado = true;
+		}
+		return resultado;
+	}
+
+	public Integer getNumOculto() {
+		return numOculto;
+	}
+	
+	
+}

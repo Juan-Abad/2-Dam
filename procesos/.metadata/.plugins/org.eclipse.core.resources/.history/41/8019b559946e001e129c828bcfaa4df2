@@ -1,0 +1,15 @@
+
+public class Hilo implements Runnable{
+
+	private Acumulador acumuladora;
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	public Hilo(Acumulador acumuladora) {
+		this.acumuladora = acumuladora;
+	}
+
+}

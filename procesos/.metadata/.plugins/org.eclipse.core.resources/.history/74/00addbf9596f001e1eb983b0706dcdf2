@@ -1,0 +1,42 @@
+
+public class Hilo implements Runnable {
+
+	private static Boolean acertar = true;
+	private Integer numAleatorio;
+	private NumOculto numOculto;
+	private Boolean acc = true;
+
+	@Override
+	public void run() {
+		while (acertar) {
+			synchronized (acc) {
+
+				System.out.println(
+						"Soy el hilo " + Thread.currentThread().getId() + ", voy a probar el num:" + numAleatorio);
+				numAleatorio = ((int) (Math.random() * 99 + 1));
+				switch (numOculto.adviniarNumero(numAleatorio)) {
+				case 0:
+					acc= false;
+				case -1:
+					detener();
+					continue;
+				case 1:
+					System.out.println("He acertado, soy :" + Thread.currentThread().getId() + ", num mio: "
+							+ numAleatorio + ", numOculto: " + numOculto.getNumOculto());
+				}
+			}
+		}
+
+	}
+
+	public Hilo() {
+		super();
+		acertar = true;
+		numOculto = new NumOculto();
+	}
+
+	public void detener() {
+		Hilo.acertar = false;
+	}
+
+}

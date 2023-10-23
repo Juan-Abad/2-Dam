@@ -1,0 +1,32 @@
+
+public class Principal {
+
+	public static void main(String[] args) {
+		Thread [] arrayHilos = new Thread[10];
+		Boolean acertarNum = true;
+		
+		for(int i =0; i<arrayHilos.length; i++) {
+			arrayHilos[i] = new Thread(new Hilo());
+			arrayHilos[i].start();
+		}
+		
+		while(acertarNum){
+			Thread.currentThread().getId()
+			for(Thread h: arrayHilos) {
+				int num = (int) (Math.random()*99+1);
+				
+			}
+			
+		}
+		
+		for(Thread h: arrayHilos) {
+			try {
+				h.join();
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+}

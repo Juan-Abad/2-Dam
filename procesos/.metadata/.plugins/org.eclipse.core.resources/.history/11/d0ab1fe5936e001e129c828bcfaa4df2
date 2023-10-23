@@ -1,0 +1,14 @@
+
+public class Acumulador {
+	
+	private Integer cantidad;
+	
+	public Acumulador() {
+		super();
+		this.cantidad = 0;
+	}
+	
+	public void sumar1() {
+		this.cantidad++;
+	}
+}
