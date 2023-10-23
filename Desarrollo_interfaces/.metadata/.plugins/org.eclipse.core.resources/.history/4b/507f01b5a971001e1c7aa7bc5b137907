@@ -43,6 +43,10 @@ public class Frame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JToolBar toolBar = new JToolBar();
+		toolBar.setBounds(0, 0, 162, 16);
+		contentPane.add(toolBar);
+		
 		JLabel lblNewLabel = new JLabel("Hola, esta es una interfaz en ECLIPSE");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
