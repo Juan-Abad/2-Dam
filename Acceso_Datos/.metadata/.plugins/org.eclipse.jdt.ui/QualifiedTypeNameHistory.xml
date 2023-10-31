@@ -3,4 +3,6 @@
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="clases.ad1_clases"/>
     <fullyQualifiedTypeName name="ad2_excepciones.ExcepcionesConThrows"/>
+    <fullyQualifiedTypeName name="ad3_operaciones.FicheroAccesoAleatorio"/>
+    <fullyQualifiedTypeName name="ad3_operaciones.VolcadoBinario"/>
 </qualifiedTypeNameHistroy>
