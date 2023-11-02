@@ -6,4 +6,5 @@
     <fullyQualifiedTypeName name="java.lang.Thread"/>
     <fullyQualifiedTypeName name="java.awt.desktop.ScreenSleepEvent"/>
     <fullyQualifiedTypeName name="Hilo"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
 </qualifiedTypeNameHistroy>
