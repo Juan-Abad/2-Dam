@@ -10,10 +10,11 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.TreeMap;
 
 public class MiFrame extends JFrame {
 
@@ -29,6 +30,13 @@ public class MiFrame extends JFrame {
 	private JLabel lblNewLabel_6;
 	private JLabel lblNewLabel_7;
 	private JLabel lblNewLabel_8;
+
+	private Integer turno = 0;
+	
+	private static Integer sizeGame = 3;
+	
+	private static Integer size_x = 3;
+	private static Integer size_y = 3;
 
 	/**
 	 * Launch the application.
@@ -70,7 +78,7 @@ public class MiFrame extends JFrame {
 		panel.setBounds(0, 33, 606, 357);
 		contentPane.add(panel);
 
-		lblNewLabel = new JLabel("X");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.addMouseListener(adapter);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,7 +179,7 @@ public class MiFrame extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ArrayList<JLabel> listaLabel = new ArrayList<JLabel>();
-			
+
 			listaLabel.add(lblNewLabel);
 			listaLabel.add(lblNewLabel_1);
 			listaLabel.add(lblNewLabel_2);
@@ -181,17 +189,125 @@ public class MiFrame extends JFrame {
 			listaLabel.add(lblNewLabel_6);
 			listaLabel.add(lblNewLabel_7);
 			listaLabel.add(lblNewLabel_8);
-			
-			for(JLabel j: listaLabel) {
-				if(e.getSource().equals(j) && j.getText().equals("")) {
-					if() {
-						
+
+			for (JLabel j : listaLabel) {
+				if (e.getSource().equals(j) && j.getText().equals("")) {
+					turno++;
+					if (turno % 2 == 0) {
+						j.setText("O");
+					} else {
+						j.setText("X");
 					}
+					switch (comprobarGanador()) {
+					case 1:
+						System.out.println("Ha ganado la X");
+						break;
+					case 2:
+						System.out.println("Ha ganado la O");
+						break;
+					default:
+						continue;
+					}
+
 				}
-				System.out.println("1");
 			}
 		}
 	};
+
+	public int comprobarGanador() {
+		System.out.println("\n\n");
+		TreeMap<Integer, ArrayList<JLabel>> mapa = new TreeMap<Integer, ArrayList<JLabel>>();
+		mapa.put(0, new ArrayList<JLabel>());
+		mapa.put(1, new ArrayList<JLabel>());
+		mapa.put(2, new ArrayList<JLabel>());
+		try {
+			mapa.get(0).add(lblNewLabel);
+			mapa.get(0).add(lblNewLabel_1);
+			mapa.get(0).add(lblNewLabel_2);
+			mapa.get(1).add(lblNewLabel_3);
+			mapa.get(1).add(lblNewLabel_4);
+			mapa.get(1).add(lblNewLabel_5);
+			mapa.get(2).add(lblNewLabel_6);
+			mapa.get(2).add(lblNewLabel_7);
+			mapa.get(2).add(lblNewLabel_8);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int resultado = 0;
+		int lineaCompleta = 0; // variable int, añade 1 si encuentra una x, quita 1 si encuentra un O. luego se
+								// comprueba en cada fila si es 3 o -3 para dar un ganador
+		int[] filaCompleta = new int[sizeGame];
+		String[] diagonal1 = new String[size_x+size_y-1];
+		String[] diagonal2 = new String[size_x+size_y-1];
+		Arrays.fill(diagonal1, "");
+		Arrays.fill(diagonal2, "");
+		for (Integer i : mapa.keySet()) {
+			for (JLabel j : mapa.get(i)) {
+				if (!j.getText().equals("")) {
+					if (j.getText().equals("X")) {
+						filaCompleta[mapa.get(i).indexOf(j)]++;
+						lineaCompleta++;
+						if(sizeGame>=i) {
+							diagonal1[i] += "X";
+						}
+						if(sizeGame<=mapa.get(i).indexOf(j)) {
+							diagonal1[i] += "X";
+						}
+
+					} else {
+						filaCompleta[mapa.get(i).indexOf(j)]--;
+						lineaCompleta--;
+						if(i<=size_Y) {
+							diagonal1[i] += "O";
+						}
+						if(sizeGame<=mapa.get(i).indexOf(j)) {
+							diagonal1[i] += "O";
+						}
+					}
+				} else {
+					if(sizeGame>=i) {
+						diagonal1[i] += " |";
+					}
+					if(sizeGame<=mapa.get(i).indexOf(j)) {
+						diagonal1[i] += " |";
+					}
+				}
+			}
+			if (lineaCompleta == 3) {
+				resultado = 1;
+			} else if (lineaCompleta == -3) {
+				resultado = 2;
+			}
+			lineaCompleta = 0;
+		}
+		for (int i : filaCompleta) {
+			switch (i) {
+			case 3:
+				resultado = 1;
+				break;
+			case -3:
+				resultado = 2;
+				break;
+			}
+		}
+		for(String diagonal: diagonal1) {
+			if(diagonal.matches(".*XXX.*")) {
+				resultado = 1;
+			}else if(diagonal.matches(".*OOO.*")) {
+				resultado = 2;
+			}
+		}
+		for(String diagonal: diagonal2) {
+			System.out.println(diagonal);
+			if(diagonal.matches(".*XXX.*")) {
+				resultado = 1;
+			}else if(diagonal.matches(".*OOO.*")) {
+				resultado = 2;
+			}
+		}
+		return resultado;
+	}
 
 	public JLabel getLblNewLabel() {
 		return lblNewLabel;
