@@ -10,6 +10,8 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -32,9 +34,9 @@ public class MiFrame extends JFrame {
 	private JLabel lblNewLabel_8;
 
 	private Integer turno = 0;
-	
+
 	private static Integer sizeGame = 3;
-	
+
 	private static Integer size_x = 3;
 	private static Integer size_y = 3;
 
@@ -71,7 +73,22 @@ public class MiFrame extends JFrame {
 		contentPane.setLayout(null);
 
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(0, 0, 30, 22);
+		comboBox.setBounds(0, 0, 139, 22);
+		comboBox.addItem("Reiniciar"); // Agrega el ítem "Reiniciar"
+
+		comboBox.setSelectedIndex(-1);
+		comboBox.setRenderer(new TitleComboBoxRenderer("Opciones"));
+
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> combo = (JComboBox<String>) e.getSource();
+				String selectedItem = (String) combo.getSelectedItem();
+				if (selectedItem != null && selectedItem.equals("Reiniciar")) {
+					resetGame(); // Llama al método resetGame() cuando se selecciona "Reiniciar"
+				}
+			}
+		});
 		contentPane.add(comboBox);
 
 		JPanel panel = new JPanel();
@@ -198,12 +215,16 @@ public class MiFrame extends JFrame {
 					} else {
 						j.setText("X");
 					}
+					Dialog_playAgain play = new Dialog_playAgain(MiFrame.this);
+					String ganador = "El ganador es la ";
 					switch (comprobarGanador()) {
 					case 1:
-						System.out.println("Ha ganado la X");
+						play.getLblNewLabel().setText(ganador + "X");
+						play.setVisible(true);
 						break;
 					case 2:
-						System.out.println("Ha ganado la O");
+						play.getLblNewLabel().setText(ganador + "O");
+						play.setVisible(true);
 						break;
 					default:
 						continue;
@@ -238,8 +259,8 @@ public class MiFrame extends JFrame {
 		int lineaCompleta = 0; // variable int, añade 1 si encuentra una x, quita 1 si encuentra un O. luego se
 								// comprueba en cada fila si es 3 o -3 para dar un ganador
 		int[] filaCompleta = new int[sizeGame];
-		String[] diagonal1 = new String[size_x+size_y-1];
-		String[] diagonal2 = new String[size_x+size_y-1];
+		String[] diagonal1 = new String[size_x + size_y - 1];
+		String[] diagonal2 = new String[size_x + size_y - 1];
 		Arrays.fill(diagonal1, "");
 		Arrays.fill(diagonal2, "");
 		for (Integer i : mapa.keySet()) {
@@ -248,30 +269,16 @@ public class MiFrame extends JFrame {
 					if (j.getText().equals("X")) {
 						filaCompleta[mapa.get(i).indexOf(j)]++;
 						lineaCompleta++;
-						if(sizeGame>=i) {
-							diagonal1[i] += "X";
-						}
-						if(sizeGame<=mapa.get(i).indexOf(j)) {
-							diagonal1[i] += "X";
-						}
-
 					} else {
 						filaCompleta[mapa.get(i).indexOf(j)]--;
 						lineaCompleta--;
-						if(i<=size_Y) {
-							diagonal1[i] += "O";
-						}
-						if(sizeGame<=mapa.get(i).indexOf(j)) {
-							diagonal1[i] += "O";
-						}
 					}
+					char symbol = j.getText().charAt(0);
+					diagonal1[mapa.get(i).indexOf(j) + i] += symbol;
+					diagonal2[size_y + i - mapa.get(i).indexOf(j) - 1] += symbol;
 				} else {
-					if(sizeGame>=i) {
-						diagonal1[i] += " |";
-					}
-					if(sizeGame<=mapa.get(i).indexOf(j)) {
-						diagonal1[i] += " |";
-					}
+					diagonal1[mapa.get(i).indexOf(j) + i] += " ";
+					diagonal2[size_y + i - mapa.get(i).indexOf(j) - 1] += " ";
 				}
 			}
 			if (lineaCompleta == 3) {
@@ -291,22 +298,37 @@ public class MiFrame extends JFrame {
 				break;
 			}
 		}
-		for(String diagonal: diagonal1) {
-			if(diagonal.matches(".*XXX.*")) {
+		for (String diagonal : diagonal1) {
+			System.out.println(diagonal);
+			if (diagonal.matches(".*XXX.*")) {
 				resultado = 1;
-			}else if(diagonal.matches(".*OOO.*")) {
+			} else if (diagonal.matches(".*OOO.*")) {
 				resultado = 2;
 			}
 		}
-		for(String diagonal: diagonal2) {
+		System.out.println("-----");
+		for (String diagonal : diagonal2) {
 			System.out.println(diagonal);
-			if(diagonal.matches(".*XXX.*")) {
+			if (diagonal.matches(".*XXX.*")) {
 				resultado = 1;
-			}else if(diagonal.matches(".*OOO.*")) {
+			} else if (diagonal.matches(".*OOO.*")) {
 				resultado = 2;
 			}
 		}
 		return resultado;
+	}
+
+	public void resetGame() {
+		turno = 0;
+		lblNewLabel.setText("");
+		lblNewLabel_1.setText("");
+		lblNewLabel_2.setText("");
+		lblNewLabel_3.setText("");
+		lblNewLabel_4.setText("");
+		lblNewLabel_5.setText("");
+		lblNewLabel_6.setText("");
+		lblNewLabel_7.setText("");
+		lblNewLabel_8.setText("");
 	}
 
 	public JLabel getLblNewLabel() {
