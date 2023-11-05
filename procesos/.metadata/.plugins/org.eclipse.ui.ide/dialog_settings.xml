@@ -15,6 +15,7 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\usuario\Desktop\2ºDam\procesos\ProductorConsumidor"/>
 			<item value="C:\Users\usuario\Desktop\2ºDam\procesos\Filosofos"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">

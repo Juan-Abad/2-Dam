@@ -11,9 +11,12 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.TreeMap;
 
 public class MiFrame extends JFrame {
 
@@ -29,6 +32,13 @@ public class MiFrame extends JFrame {
 	private JLabel lblNewLabel_6;
 	private JLabel lblNewLabel_7;
 	private JLabel lblNewLabel_8;
+
+	private Integer turno = 0;
+
+	private static Integer sizeGame = 3;
+
+	private static Integer size_x = 3;
+	private static Integer size_y = 3;
 
 	/**
 	 * Launch the application.
@@ -52,7 +62,7 @@ public class MiFrame extends JFrame {
 	public MiFrame() {
 		setTitle("El fantástico Juego del 3 en Raya");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				"C:\\Users\\usuario\\Desktop\\2ºDam\\Desarrollo_interfaces\\TresEnRaya\\imagenes\\tic-tac-toe-game-icon.jpg"));
+				"imagenes\\tic-tac-toe-game-icon.jpg"));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 622, 429);
@@ -63,14 +73,29 @@ public class MiFrame extends JFrame {
 		contentPane.setLayout(null);
 
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(0, 0, 30, 22);
+		comboBox.setBounds(0, 0, 139, 22);
+		comboBox.addItem("Reiniciar"); // Agrega el ítem "Reiniciar"
+
+		comboBox.setSelectedIndex(-1);
+		comboBox.setRenderer(new TitleComboBoxRenderer("Opciones"));
+
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> combo = (JComboBox<String>) e.getSource();
+				String selectedItem = (String) combo.getSelectedItem();
+				if (selectedItem != null && selectedItem.equals("Reiniciar")) {
+					resetGame(); // Llama al método resetGame() cuando se selecciona "Reiniciar"
+				}
+			}
+		});
 		contentPane.add(comboBox);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 33, 606, 357);
 		contentPane.add(panel);
 
-		lblNewLabel = new JLabel("X");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.addMouseListener(adapter);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,7 +196,7 @@ public class MiFrame extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ArrayList<JLabel> listaLabel = new ArrayList<JLabel>();
-			
+
 			listaLabel.add(lblNewLabel);
 			listaLabel.add(lblNewLabel_1);
 			listaLabel.add(lblNewLabel_2);
@@ -181,17 +206,130 @@ public class MiFrame extends JFrame {
 			listaLabel.add(lblNewLabel_6);
 			listaLabel.add(lblNewLabel_7);
 			listaLabel.add(lblNewLabel_8);
-			
-			for(JLabel j: listaLabel) {
-				if(e.getSource().equals(j) && j.getText().equals("")) {
-					if() {
-						
+
+			for (JLabel j : listaLabel) {
+				if (e.getSource().equals(j) && j.getText().equals("")) {
+					turno++;
+					if (turno % 2 == 0) {
+						j.setText("O");
+					} else {
+						j.setText("X");
 					}
+					Dialog_playAgain play = new Dialog_playAgain(MiFrame.this);
+					String ganador = "El ganador es la ";
+					switch (comprobarGanador()) {
+					case 1:
+						play.getLblNewLabel().setText(ganador + "X");
+						play.setVisible(true);
+						break;
+					case 2:
+						play.getLblNewLabel().setText(ganador + "O");
+						play.setVisible(true);
+						break;
+					default:
+						continue;
+					}
+
 				}
-				System.out.println("1");
 			}
 		}
 	};
+
+	public int comprobarGanador() {
+		System.out.println("\n\n");
+		TreeMap<Integer, ArrayList<JLabel>> mapa = new TreeMap<Integer, ArrayList<JLabel>>();
+		mapa.put(0, new ArrayList<JLabel>());
+		mapa.put(1, new ArrayList<JLabel>());
+		mapa.put(2, new ArrayList<JLabel>());
+		try {
+			mapa.get(0).add(lblNewLabel);
+			mapa.get(0).add(lblNewLabel_1);
+			mapa.get(0).add(lblNewLabel_2);
+			mapa.get(1).add(lblNewLabel_3);
+			mapa.get(1).add(lblNewLabel_4);
+			mapa.get(1).add(lblNewLabel_5);
+			mapa.get(2).add(lblNewLabel_6);
+			mapa.get(2).add(lblNewLabel_7);
+			mapa.get(2).add(lblNewLabel_8);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int resultado = 0;
+		int lineaCompleta = 0; // variable int, añade 1 si encuentra una x, quita 1 si encuentra un O. luego se
+								// comprueba en cada fila si es 3 o -3 para dar un ganador
+		int[] filaCompleta = new int[sizeGame];
+		String[] diagonal1 = new String[size_x + size_y - 1];
+		String[] diagonal2 = new String[size_x + size_y - 1];
+		Arrays.fill(diagonal1, "");
+		Arrays.fill(diagonal2, "");
+		for (Integer i : mapa.keySet()) {
+			for (JLabel j : mapa.get(i)) {
+				if (!j.getText().equals("")) {
+					if (j.getText().equals("X")) {
+						filaCompleta[mapa.get(i).indexOf(j)]++;
+						lineaCompleta++;
+					} else {
+						filaCompleta[mapa.get(i).indexOf(j)]--;
+						lineaCompleta--;
+					}
+					char symbol = j.getText().charAt(0);
+					diagonal1[mapa.get(i).indexOf(j) + i] += symbol;
+					diagonal2[size_y + i - mapa.get(i).indexOf(j) - 1] += symbol;
+				} else {
+					diagonal1[mapa.get(i).indexOf(j) + i] += " ";
+					diagonal2[size_y + i - mapa.get(i).indexOf(j) - 1] += " ";
+				}
+			}
+			if (lineaCompleta == 3) {
+				resultado = 1;
+			} else if (lineaCompleta == -3) {
+				resultado = 2;
+			}
+			lineaCompleta = 0;
+		}
+		for (int i : filaCompleta) {
+			switch (i) {
+			case 3:
+				resultado = 1;
+				break;
+			case -3:
+				resultado = 2;
+				break;
+			}
+		}
+		for (String diagonal : diagonal1) {
+			
+			if (diagonal.matches(".*XXX.*")) {
+				resultado = 1;
+			} else if (diagonal.matches(".*OOO.*")) {
+				resultado = 2;
+			}
+		}
+		
+		for (String diagonal : diagonal2) {
+			
+			if (diagonal.matches(".*XXX.*")) {
+				resultado = 1;
+			} else if (diagonal.matches(".*OOO.*")) {
+				resultado = 2;
+			}
+		}
+		return resultado;
+	}
+
+	public void resetGame() {
+		turno = 0;
+		lblNewLabel.setText("");
+		lblNewLabel_1.setText("");
+		lblNewLabel_2.setText("");
+		lblNewLabel_3.setText("");
+		lblNewLabel_4.setText("");
+		lblNewLabel_5.setText("");
+		lblNewLabel_6.setText("");
+		lblNewLabel_7.setText("");
+		lblNewLabel_8.setText("");
+	}
 
 	public JLabel getLblNewLabel() {
 		return lblNewLabel;
