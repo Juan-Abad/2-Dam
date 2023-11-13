@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 
 
 public class VentanaTabbedPane {
+	private static JTextField txtIngenieroInformticoAltamente;
 
 	public static void main(String[] args) {
 		// Crea una ventana
@@ -19,25 +20,7 @@ public class VentanaTabbedPane {
 		// Crea un panel de pestañas
 		JTabbedPane pestanyas = new JTabbedPane();
 		
-		// Crea la pestaña de datos personales
-		/*JPanel datosPersonales = new JPanel();
-		datosPersonales.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JPanel datosPersonalesInfo = new JPanel();
-		datosPersonalesInfo.add(new JLabel("Nombre:"));
-		datosPersonalesInfo.add(new JTextField("Juan"));
-		datosPersonalesInfo.add(new JLabel("Apellidos:"));
-		datosPersonalesInfo.add(new JTextField("Abad"));
-		datosPersonalesInfo.add(new JLabel("Fecha de nacimiento:"));
-		datosPersonalesInfo.add(new JTextField("05/10/2003"));
-		datosPersonales.add(datosPersonalesInfo);
-		
-		JLabel lblNewLabel = new JLabel();
-		lblNewLabel.setIcon(new ImageIcon("imagenes\\descarga.jpg"));
-		datosPersonales.add(lblNewLabel);
-		
-		pestanyas.addTab("Datos personales", datosPersonales);*/
-		
+		// Crea la pestaña de datos personales		
 		JPanel datosPersonales = new JPanel();
         datosPersonales.setLayout(new BorderLayout());
 
