@@ -7,7 +7,6 @@
     <fullyQualifiedTypeName name="Dialog_playAgain"/>
     <fullyQualifiedTypeName name="MiFrame"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
     <fullyQualifiedTypeName name="javax.swing.DefaultListCellRenderer"/>
     <fullyQualifiedTypeName name="java.awt.Component"/>
     <fullyQualifiedTypeName name="javax.swing.JList"/>
@@ -20,4 +19,6 @@
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="java.awt.LayoutManager"/>
     <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+    <fullyQualifiedTypeName name="java.awt.Insets"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
 </qualifiedTypeNameHistroy>
