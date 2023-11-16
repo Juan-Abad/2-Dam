@@ -22,20 +22,23 @@ public class Almacen {
 	synchronized public void almacenarPatin(Integer numeroPie, Boolean pieDerecho) {
 		if (mapaPatines.containsKey(numeroPie)) {
 			for (Patin patin : mapaPatines.get(numeroPie)) {
-				if (patin.isParCompleto() == false) {
+				if (!patin.isParCompleto()) {
 					if (pieDerecho != null) {
-						if (pieDerecho == true && patin.getPatinDerecho() == false) {
+						if (pieDerecho && !patin.getPatinDerecho()) {
 							patin.setPatinDerecho(true);
-						} else if (pieDerecho == false && patin.getPatinIzquierdo() == false) {
+						} else if (!patin.getPatinIzquierdo()){
 							patin.setPatinIzquierdo(true);
 						}
-					} else if (patin.getPatinDerecho() == false && patin.getPatinIzquierdo() == false) {
-						patin.setPatinDerecho(true);
-						patin.setPatinIzquierdo(true);
+					} else {
+						if(!patin.getPatinDerecho() && !patin.getPatinIzquierdo()) {
+							patin.setPatinDerecho(true);
+							patin.setPatinIzquierdo(true);
+						}
 					}
+					System.out.println(patin.toString());
 				}
-				System.out.println(patin.toString());
 			}
+			notifyAll();
 		} else {
 			System.out.println("Número de pie no exitente");
 		}
@@ -44,18 +47,38 @@ public class Almacen {
 	synchronized public void retirarPatin(Integer numeroPie, Boolean pieDerecho) {
 		if (mapaPatines.containsKey(numeroPie)) {
 			for (Patin patin : mapaPatines.get(numeroPie)) {
-				if (patin.isParCompleto() == false) {
-					if (pieDerecho != null) {
-						if (pieDerecho == true && patin.getPatinDerecho() == true) {
-							patin.setPatinDerecho(false);
-						} else if (pieDerecho == false && patin.getPatinIzquierdo() == true) {
-							patin.setPatinIzquierdo(false);
+				if (pieDerecho != null) {
+					if (pieDerecho == true) {
+						while (patin.getPatinDerecho()) {
+							try {
+								wait();
+							} catch (InterruptedException ex) {
+								ex.printStackTrace();
+							}
 						}
-					} else if (patin.getPatinDerecho() == true && patin.getPatinIzquierdo() == true) {
 						patin.setPatinDerecho(false);
+					} else if (pieDerecho == false) {
+						while (patin.getPatinIzquierdo()) {
+							try {
+								wait();
+							} catch (InterruptedException ex) {
+								ex.printStackTrace();
+							}
+						}
 						patin.setPatinIzquierdo(false);
 					}
+				} else {
+					while (!patin.isParCompleto()) {
+						try {
+							wait();
+						} catch (InterruptedException ex) {
+							ex.printStackTrace();
+						}
+					}
+					patin.setPatinDerecho(false);
+					patin.setPatinIzquierdo(false);
 				}
+
 				System.out.println(patin.toString());
 			}
 		} else {
