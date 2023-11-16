@@ -1,14 +1,14 @@
 package ej07_AcademiaPatinaje;
 
 public class Patin {
-	
+
 	private Integer idPatin = 0;
 	private static Integer idSiguiente = 1;
-	
+
 	private Boolean patinDerecho = true;
 	private Boolean patinIzquierdo = true;
 
-	private boolean parCompleto;
+	private boolean parCompleto = true;
 
 	private Integer numeroPie;
 
@@ -16,9 +16,6 @@ public class Patin {
 		idPatin = idSiguiente;
 		idSiguiente++;
 		this.numeroPie = numPie;
-		if (patinDerecho == true && patinIzquierdo == true) {
-			parCompleto = true;
-		}
 	}
 
 	public Boolean getPatinDerecho() {
@@ -26,8 +23,10 @@ public class Patin {
 	}
 
 	public void setPatinDerecho(Boolean patinDerecho) {
-		if(patinDerecho!=null) this.patinDerecho = patinDerecho;
-		if(this.patinDerecho==false) parCompleto=false;
+		if (patinDerecho != null)
+			this.patinDerecho = patinDerecho;
+		if (this.patinDerecho == false)
+			parCompleto = false;
 	}
 
 	public Boolean getPatinIzquierdo() {
@@ -35,8 +34,10 @@ public class Patin {
 	}
 
 	public void setPatinIzquierdo(Boolean patinIzquierdo) {
-		if(patinIzquierdo!=null) this.patinIzquierdo = patinIzquierdo;
-		if(this.patinIzquierdo==false) parCompleto=false;
+		if (patinIzquierdo != null)
+			this.patinIzquierdo = patinIzquierdo;
+		if (this.patinIzquierdo == false)
+			parCompleto = false;
 	}
 
 	public Integer getNumeroPie() {

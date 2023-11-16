@@ -26,18 +26,19 @@ public class Almacen {
 					if (pieDerecho != null) {
 						if (pieDerecho && !patin.getPatinDerecho()) {
 							patin.setPatinDerecho(true);
-						} else if (!patin.getPatinIzquierdo()){
+						} else if (!patin.getPatinIzquierdo()) {
 							patin.setPatinIzquierdo(true);
 						}
 					} else {
-						if(!patin.getPatinDerecho() && !patin.getPatinIzquierdo()) {
+						if (!patin.getPatinDerecho() && !patin.getPatinIzquierdo()) {
 							patin.setPatinDerecho(true);
 							patin.setPatinIzquierdo(true);
 						}
 					}
-					System.out.println(patin.toString());
 				}
 			}
+			System.out.println("Hilo" + Thread.currentThread() + "almaceno patin, número de pie: " + numeroPie
+					+ ", principiante: " + pieDerecho);
 			notifyAll();
 		} else {
 			System.out.println("Número de pie no exitente");
@@ -49,7 +50,7 @@ public class Almacen {
 			for (Patin patin : mapaPatines.get(numeroPie)) {
 				if (pieDerecho != null) {
 					if (pieDerecho == true) {
-						while (patin.getPatinDerecho()) {
+						while (!patin.getPatinDerecho()) {
 							try {
 								wait();
 							} catch (InterruptedException ex) {
@@ -58,7 +59,7 @@ public class Almacen {
 						}
 						patin.setPatinDerecho(false);
 					} else if (pieDerecho == false) {
-						while (patin.getPatinIzquierdo()) {
+						while (!patin.getPatinIzquierdo()) {
 							try {
 								wait();
 							} catch (InterruptedException ex) {
@@ -78,9 +79,10 @@ public class Almacen {
 					patin.setPatinDerecho(false);
 					patin.setPatinIzquierdo(false);
 				}
-
-				System.out.println(patin.toString());
 			}
+			System.out.println("Hilo" + Thread.currentThread() + "retiro patin, número de pie: " + numeroPie
+					+ ", principiante: " + pieDerecho);
+			notifyAll();
 		} else {
 			System.out.println("Número de pie no exitente");
 		}

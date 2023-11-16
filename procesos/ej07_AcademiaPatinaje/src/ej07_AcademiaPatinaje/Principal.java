@@ -6,16 +6,13 @@ public class Principal {
 		Almacen almacen = new Almacen();
 		Patinador patinador;
 		// Creamos los patinadores
-		for(int i=0; i<10;i++) {
-			if(((int) (Math.random()*6))==0) {
+		for (int i = 0; i < 50; i++) {
+			if (((int) (Math.random() * 6)) == 1) {
 				patinador = new Patinador(true, almacen);
-			}else {
+			} else {
 				patinador = new Patinador(false, almacen);
 			}
 			patinador.start();
 		}
-		
-		// 
-		
 	}
 }

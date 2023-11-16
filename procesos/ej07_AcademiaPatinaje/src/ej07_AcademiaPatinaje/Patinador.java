@@ -5,10 +5,13 @@ public class Patinador extends Thread {
 	private Boolean principiante;
 
 	private Integer numeroPie;
-	
-	private Patin patin;
+
+	private Integer idPatinador;
+	private static Integer siguienteID = 1;
 
 	public Patinador(Boolean principiante, Almacen almacen) {
+		this.idPatinador = siguienteID;
+		siguienteID++;
 		this.principiante = principiante;
 		this.almacen = almacen;
 		this.numeroPie = ((int) (Math.random() * 10 + 34));
@@ -16,11 +19,10 @@ public class Patinador extends Thread {
 
 	@Override
 	public void run() {
-		while(true) {s
+		while (true) {
 			almacen.retirarPatin(numeroPie, principiante);
-			System.out.println("Hilo" + Thread.currentThread() + "retiro patin");
 			try {
-				sleep(100);
+				sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
