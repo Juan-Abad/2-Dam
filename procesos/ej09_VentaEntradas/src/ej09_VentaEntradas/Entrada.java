@@ -11,27 +11,26 @@ public class Entrada {
 
 	private Boolean isAvailable = true;
 
-	public Entrada(int numeroMaxEntradas) {
-		this.idEntrada = siguienteID;
-		siguienteID++;
-		Entrada.numeroEntradasDisponibles = numeroMaxEntradas;
-		if (listaEntradas.size() == 0) {
-			listaEntradas.add(this);
-			for (int i = 0; i < numeroMaxEntradas - 1; i++) {
-				listaEntradas.add(new Entrada(numeroMaxEntradas));
-			}
-		}
-	}
+	public Entrada() {
+        this.idEntrada = siguienteID++;
+    }
 
-	public static Integer getNumeroEntradasDisponibles() {
+    public static void inicializarEntradas(int numeroMaxEntradas) {
+        numeroEntradasDisponibles = numeroMaxEntradas;
+        for (int i = 0; i < numeroMaxEntradas-1; i++) {
+            listaEntradas.add(new Entrada());
+        }
+    }
+
+	synchronized public static Integer getNumeroEntradasDisponibles() {
 		return numeroEntradasDisponibles;
 	}
 
-	public static void setNumeroEntradasDisponibles(Integer numeroEntradasDisponibles) {
+	synchronized public static void setNumeroEntradasDisponibles(Integer numeroEntradasDisponibles) {
 		Entrada.numeroEntradasDisponibles = numeroEntradasDisponibles;
 	}
 
-	public Integer getIdEntrada() {
+	synchronized public Integer getIdEntrada() {
 		return idEntrada;
 	}
 
@@ -39,17 +38,17 @@ public class Entrada {
 		return siguienteID;
 	}
 
-	public void setIsAvailable(Boolean isAvailable) {
+	synchronized public void setIsAvailable(Boolean isAvailable) {
 		if (isAvailable != null) {
 			this.isAvailable = isAvailable;
 		}
 	}
 
-	public Boolean getIsAvailable() {
+	synchronized public Boolean getIsAvailable() {
 		return isAvailable;
 	}
 
-	public static ArrayList<Entrada> getListaEntradas() {
+	synchronized public static ArrayList<Entrada> getListaEntradas() {
 		return listaEntradas;
 	}
 
