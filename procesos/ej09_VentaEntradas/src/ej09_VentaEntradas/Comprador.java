@@ -5,9 +5,6 @@ import java.util.ArrayList;
 public class Comprador extends Thread {
 	private ArrayList<Entrada> entradaList = new ArrayList<Entrada>();
 
-	private Integer numero_entradas_aComprar;
-	private Integer numero_entradas_aVender;
-
 	private Integer idComprador;
 	private static Integer siguienteID = 1;
 
@@ -20,15 +17,15 @@ public class Comprador extends Thread {
 		while (true) {
 			comprar_entradas((int) (Math.random() * 9 + 1));
 			try {
-				sleep(1000);
+				sleep((int) (Math.random() * 2000));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			vender_entradas((int) (Math.random() * entradaList.size() + 1));
+			vender_entradas((int) (Math.random() * entradaList.size()));
 		}
 	}
 
-	synchronized public void comprar_entradas(int numEntradas) {
+	public void comprar_entradas(int numEntradas) {
 	    int entradasCompradas = 0;
 	    for (Entrada entrada : Entrada.getListaEntradas()) {
 	        if (entrada.getIsAvailable() && entradasCompradas < numEntradas) {
@@ -43,7 +40,6 @@ public class Comprador extends Thread {
 	        }
 	    }
 	    Entrada.setNumeroEntradasDisponibles(Entrada.getNumeroEntradasDisponibles() - entradasCompradas);
-	    notifyAll();
 	}
 
 
