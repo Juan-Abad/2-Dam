@@ -21,4 +21,8 @@
     <fullyQualifiedTypeName name="java.awt.Insets"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
+    <fullyQualifiedTypeName name="java.util.regex.Matcher"/>
+    <fullyQualifiedTypeName name="org.w3c.dom.Text"/>
+    <fullyQualifiedTypeName name="java.lang.Double"/>
 </qualifiedTypeNameHistroy>

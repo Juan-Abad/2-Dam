@@ -60,6 +60,7 @@ public class CalculadoraGUI extends JFrame {
 		setTitle("Calculadora");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 457, 575);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -71,6 +72,7 @@ public class CalculadoraGUI extends JFrame {
 		textField.setFont(new Font("Serif", Font.BOLD, 33));
 		textField.setMargin(new Insets(0, 10, 0, 0));
 		textField.setBounds(0, 0, 445, 62);
+		textField.setEditable(false);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
@@ -174,7 +176,9 @@ public class CalculadoraGUI extends JFrame {
 		btnNewButton_16.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnNewButton_16.setBounds(0, 442, 110, 95);
 		btnNewButton_16.addActionListener((ActionEvent e) -> {
-			textField.setText("0");
+			if (textField.getText().length() > 0) {
+				textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+			}
 		});
 		contentPane.add(btnNewButton_16);
 
@@ -191,15 +195,6 @@ public class CalculadoraGUI extends JFrame {
 	MouseAdapter adapter = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			String text = textField.getText();
-			if (text.length() > 0) {
-				if(text.charAt(0)=='0' && text.length()>1) {
-					textField.setText(text.substring(1));
-				}
-				if (String.valueOf(((JButton) e.getSource()).getText().charAt(0)).matches("^0||[\\+\\-\\=\\.\\/*]")) {
-					textField.setText("0");
-				}
-			}
 
 			switch (((JButton) e.getSource()).getText()) {
 			case "1":
@@ -229,6 +224,9 @@ public class CalculadoraGUI extends JFrame {
 			case "9":
 				textField.setText(textField.getText() + "9");
 				break;
+			case "0":
+				textField.setText(textField.getText() + "0");
+				break;
 			case ".":
 				textField.setText(textField.getText() + ".");
 				break;
@@ -245,9 +243,36 @@ public class CalculadoraGUI extends JFrame {
 				textField.setText(textField.getText() + "*");
 				break;
 			case "=":
-				textField.setText(textField.getText() + "=" + ejecutar_operacion(textField.getText()));
-				textField.setEditable(false);
+				if (textField.getText().length() > 0
+						&& !String.valueOf(textField.getText().charAt(textField.getText().length() - 1))
+								.matches("[\\+\\-\\=\\/*]")
+						&& !textField.getText().substring(0, textField.getText().length() - 1).contains("=")) {
+					textField.setText(textField.getText() + "=" + ejecutar_operacion(textField.getText()));
+				}
 				break;
+			}
+			if (textField.getText().length() > 1) {
+				if (textField.getText().charAt(0) == '0' && textField.getText().length() > 1
+						&& !String.valueOf(textField.getText().charAt(1)).equals(".")
+						&& !String.valueOf(textField.getText().charAt(1)).matches(".*[\\+\\-\\/*].*")) {
+					textField.setText(textField.getText().substring(1));
+				}
+				if (textField.getText().matches(".*[\\+\\-\\=\\.\\/*]{2}.*")) {
+					textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+				}
+				if (String.valueOf(textField.getText().charAt(textField.getText().length() - 1)).equals(".")) {
+					String comprobacion = "";
+					for (int i = textField.getText().length() - 2; i >= 0; i--) {
+						if (String.valueOf(textField.getText().charAt(i)).matches("[\\+\\-\\=\\/*]") || i == 0) {
+							if (comprobacion.contains(".")) {
+								textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+							}
+							break;
+						} else {
+							comprobacion += String.valueOf((textField.getText().charAt(i)));
+						}
+					}
+				}
 			}
 		}
 	};
@@ -255,10 +280,58 @@ public class CalculadoraGUI extends JFrame {
 	public String ejecutar_operacion(String operacion) {
 		ArrayList<String> operaciones = new ArrayList<String>();
 		String resultado = "";
+		String numero = "";
+		String cadena_iteracion = "";
 		for (int i = 0; i < operacion.length(); i++) {
-			System.out.println(operacion.substring(i));
-			operacion.substring(i);
+			if (String.valueOf(operacion.charAt(i)).matches("[\\+\\-\\/*]")) {
+				if (numero.length() > 0) {
+					operaciones.add(numero);
+				}
+				operaciones.add(String.valueOf(operacion.charAt(i)));
+				numero = "";
+			} else {
+				numero += operacion.charAt(i);
+			}
 		}
-		return resultado;
+		operaciones.add(numero);
+		for (int i = 0; i < operaciones.size(); i++) {
+			cadena_iteracion = operaciones.get(i);
+
+			if (cadena_iteracion.equals("*") || cadena_iteracion.equals("/")) {
+				if (cadena_iteracion.equals("*")) {
+					operaciones.set(i - 1, Double.toString(
+							Double.parseDouble(operaciones.get(i - 1)) * Double.parseDouble(operaciones.get(i + 1))));
+				} else if (cadena_iteracion.equals("/")) {
+					operaciones.set(i - 1, Double.toString(
+							Double.parseDouble(operaciones.get(i - 1)) / Double.parseDouble(operaciones.get(i + 1))));
+				}
+
+				operaciones.remove(i + 1);
+				operaciones.remove(i);
+				i--;
+			}
+		}
+		cadena_iteracion = "";
+		for (int i = 0; i < operaciones.size(); i++) {
+			cadena_iteracion = operaciones.get(i);
+
+			if (cadena_iteracion.equals("+") || cadena_iteracion.equals("-")) {
+				if (cadena_iteracion.equals("+")) {
+					operaciones.set(i - 1, Double.toString(
+							Double.parseDouble(operaciones.get(i - 1)) + Double.parseDouble(operaciones.get(i + 1))));
+				} else if (cadena_iteracion.equals("-")) {
+					operaciones.set(i - 1, Double.toString(
+							Double.parseDouble(operaciones.get(i - 1)) - Double.parseDouble(operaciones.get(i + 1))));
+				}
+
+				operaciones.remove(i + 1);
+				operaciones.remove(i);
+				i--;
+			}
+		}
+		if (operaciones.get(0).contains(".")) {
+			return String.format("%.2f", (Double.parseDouble(operaciones.get(0))));
+		}
+		return operaciones.get(0);
 	}
 }
