@@ -1,8 +1,21 @@
+<<<<<<< HEAD
 INDEX VERSION 1.134+C:\Users\Juan\Desktop\2 Dam\2-Dam\Desarrollo_interfaces\.metadata\.plugins\org.eclipse.jdt.core
 2824979280.index
 1865797976.index
 1352938787.index
+=======
+INDEX VERSION 1.134+C:\Users\usuario\Desktop\2ºDam\Desarrollo_interfaces\.metadata\.plugins\org.eclipse.jdt.core
+2933784932.index
+>>>>>>> b4168246fa05c215c9cf8a6f49ba8e9dbefc233c
 758184570.index
+598193499.index
+2815226043.index
 883519234.index
+<<<<<<< HEAD
 2815226043.index
 2933784932.index
+=======
+1865797976.index
+2824979280.index
+1352938787.index
+>>>>>>> b4168246fa05c215c9cf8a6f49ba8e9dbefc233c
