@@ -15,7 +15,7 @@ public class Camarero extends Thread {
 
 	public void run() {
 		while (true) {
-			switch (((int) (Math.random() * 2))) {
+			switch (((int) (Math.random() * 3))) {
 			case 0:
 				usarGrifo(0);
 				usarGrifo(2);
