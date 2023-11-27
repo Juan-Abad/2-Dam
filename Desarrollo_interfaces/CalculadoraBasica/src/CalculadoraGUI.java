@@ -279,7 +279,6 @@ public class CalculadoraGUI extends JFrame {
 
 	public String ejecutar_operacion(String operacion) {
 		ArrayList<String> operaciones = new ArrayList<String>();
-		String resultado = "";
 		String numero = "";
 		String cadena_iteracion = "";
 		for (int i = 0; i < operacion.length(); i++) {
