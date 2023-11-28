@@ -29,4 +29,8 @@
     <fullyQualifiedTypeName name="Dialog_solution"/>
     <fullyQualifiedTypeName name="java.awt.Image"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="javax.swing.JPopupMenu.Separator"/>
+    <fullyQualifiedTypeName name="javax.swing.JSeparator"/>
+    <fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
+    <fullyQualifiedTypeName name="java.awt.Toolkit"/>
 </qualifiedTypeNameHistroy>
