@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 
 public class Frame_principal extends JFrame {
@@ -94,41 +95,37 @@ public class Frame_principal extends JFrame {
 							}
 						} else {
 							for (Integer i : mapa_generado.keySet()) {
-								System.out.println("..");
-								if (mapa_generado.get(i).get(0) == index) {
-									System.out.println("a");
+								if (mapa_generado.get(i).contains(index)) {
 									mapaImagenes.get(index).setIcon(new ImageIcon("imagenes\\" + i + ".jpeg"));
-									pos_imagen_seleccionada = index;
-									turno = 0;
-								} else if (mapa_generado.get(i).get(1) == index) {
-									System.out.println("b");
-									mapaImagenes.get(index).setIcon(new ImageIcon("imagenes\\" + i + ".jpeg"));
-									pos_imagen_seleccionada = index;
 									turno = 0;
 								}
 							}
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
-							mapaImagenes.get(index).setIcon("imagenes\\" + 19 + ".jpeg");
-							mapaImagenes.get(pos_imagen_seleccionada).setIcon(null);
-							for (Integer i : mapa_generado.keySet()) {
-								if (mapa_generado.get(i).get(0) == pos_imagen_seleccionada
-										&& mapa_generado.get(i).get(1) != pos_imagen_seleccionada) {
-									mapaImagenes.get(index).setIcon(null);
+							SwingUtilities.invokeLater(() -> {
+								boolean imagenes_correspondientes = true;
+								for (Integer i : mapa_generado.keySet()) {
+									if (mapa_generado.get(i).contains(index)
+											&& mapa_generado.get(i).contains(pos_imagen_seleccionada)) {
+										imagenes_correspondientes = true;
+										break;
+									} else {
+										imagenes_correspondientes = false;
+									}
+								}
+								if (!imagenes_correspondientes) {
+									System.out.println(pos_imagen_seleccionada + " " + index);
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e1) {
+										e1.printStackTrace();
+									}
+									// Acción a realizar después de un pequeño retraso
 									mapaImagenes.get(pos_imagen_seleccionada).setIcon(null);
+									mapaImagenes.get(index).setIcon(null);
 									turno = 0;
 									pos_imagen_seleccionada = null;
-								} else if (mapa_generado.get(i).get(1) == pos_imagen_seleccionada
-										&& mapa_generado.get(i).get(0) != pos_imagen_seleccionada) {
-									mapaImagenes.get(index).setIcon(new ImageIcon(""));
-									mapaImagenes.get(pos_imagen_seleccionada).setIcon(new ImageIcon(""));
-									turno = 0;
-									pos_imagen_seleccionada = null;
+									System.out.println(pos_imagen_seleccionada + " " + index);
 								}
-							}
+							});
 						}
 					}
 				}
@@ -168,5 +165,9 @@ public class Frame_principal extends JFrame {
 			mapa_generado.get(i).add(posicion_aleatoria_1);
 			mapa_generado.get(i).add(posicion_aleatoria_2);
 		}
+	}
+	
+	public void resetGame() {
+		for(Integer index: mapaImagenes.keySet()) mapaImagenes.get(index).setIcon(null);
 	}
 }
