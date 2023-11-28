@@ -13,15 +13,6 @@ public class Trabajador extends Thread {
 
 	public void run() {
 		while (true) {
-			while(carro.getNumero_munyecas()==0) {
-				carro.notify();
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
             carro.cogerDelCarro();
 			try {
 				sleep((int) (Math.random() * 1000));

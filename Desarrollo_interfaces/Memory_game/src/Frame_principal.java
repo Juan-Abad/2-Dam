@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,8 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 
@@ -51,22 +53,22 @@ public class Frame_principal extends JFrame {
 	public Frame_principal() {
 		setTitle("Juego de memoria");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-		int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-		int x = (screenWidth - getWidth()) / 2;
-		int y = (screenHeight - screenHeight/2 - getHeight()*2) / 2;
-		
-		setBounds(x, y, 917, 837);
+
+		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+		int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+		int x = (int) ((screenWidth - screenWidth) / 2);
+		int y = (int) ((screenHeight - screenHeight / 1.3) / 2);
+
+		setBounds(x, y, 917, 818);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(0, 0, 139, 22);
-		comboBox.addItem("Reiniciar"); // Agrega el ítem "Reiniciar"
+		comboBox.setBounds(0, 0, 139, 26);
+		comboBox.addItem("Reiniciar");
 		comboBox.addItem("Jugar nueva partida");
 		comboBox.addItem("Mostrar Solución");
 		comboBox.addItem("Quitar Solución");
@@ -111,18 +113,44 @@ public class Frame_principal extends JFrame {
 
 		int posX = -150;
 		int posY = 27;
+		int separadorAncho = 5;
+
 		for (int i = 0; i < 36; i++) {
 			if (i % 6 == 0 && i != 0) {
 				posY += 125;
 				posX = -150;
 			}
 			posX += 150;
-			JLabel label = new JLabel(Integer.toString(i));
+			JLabel label = new JLabel();
 			label.setBounds(posX, posY, 150, 125);
 			label.addMouseListener(adapter);
 			contentPane.add(label);
 			mapaImagenes.put(i, label);
+
+			if (i < 6) {
+				JSeparator separatorVertical = new JSeparator(SwingConstants.VERTICAL);
+				separatorVertical.setBounds(posX + 150, posY, separadorAncho, screenHeight);
+				separatorVertical.setForeground(Color.BLACK);
+				separatorVertical.setBackground(Color.BLACK);
+				contentPane.add(separatorVertical);
+			}
+
+			if (i % 6 == 0) {
+				JSeparator separatorHorizontal = new JSeparator(SwingConstants.HORIZONTAL);
+				separatorHorizontal.setBounds(posX, posY + 125, screenWidth, separadorAncho);
+				separatorHorizontal.setForeground(Color.BLACK);
+				separatorHorizontal.setBackground(Color.BLACK);
+				contentPane.add(separatorHorizontal);
+				if (i == 0) {
+					separatorHorizontal = new JSeparator(SwingConstants.HORIZONTAL);
+					separatorHorizontal.setBounds(posX, posY, screenWidth, separadorAncho);
+					separatorHorizontal.setForeground(Color.BLACK);
+					separatorHorizontal.setBackground(Color.BLACK);
+					contentPane.add(separatorHorizontal);
+				}
+			}
 		}
+
 		generarJuego();
 
 		play_again = new Dialog_playAgain(Frame_principal.this);
@@ -171,7 +199,6 @@ public class Frame_principal extends JFrame {
 									} catch (InterruptedException e1) {
 										e1.printStackTrace();
 									}
-									// Acción a realizar después de un pequeño retraso
 									mapaImagenes.get(pos_imagen_seleccionada).setIcon(null);
 									mapaImagenes.get(index).setIcon(null);
 									turno = 0;
@@ -234,17 +261,15 @@ public class Frame_principal extends JFrame {
 		}
 		return partida_ganada;
 	}
-	
-	public static ImageIcon redimensionar_imagen(String ruta) {
-		ImageIcon icon = new ImageIcon(ruta); // Carga la imagen
-		Image image = icon.getImage(); // Obtén la imagen del ImageIcon
 
-		// Redimensiona la imagen a un tamaño específico
-		int anchoDeseado = 150; // Ancho deseado en píxeles
-		int altoDeseado = 170;  // Alto deseado en píxeles
+	public static ImageIcon redimensionar_imagen(String ruta) {
+		ImageIcon icon = new ImageIcon(ruta);
+		Image image = icon.getImage();
+
+		int anchoDeseado = 150;
+		int altoDeseado = 170;
 		Image imagenRedimensionada = image.getScaledInstance(anchoDeseado, altoDeseado, Image.SCALE_SMOOTH);
 
-		// Crea un nuevo ImageIcon con la imagen redimensionada
 		ImageIcon iconoRedimensionado = new ImageIcon(imagenRedimensionada);
 		return iconoRedimensionado;
 	}
@@ -276,5 +301,4 @@ public class Frame_principal extends JFrame {
 	public Dialog_solution getSolution_dialog() {
 		return solution_dialog;
 	}
-
 }

@@ -13,8 +13,10 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 
@@ -27,13 +29,17 @@ public class Dialog_solution extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 
+	/**
+	 * Create the dialog.
+	 */
 	public Dialog_solution(JFrame frame_principal) {
 		this.frame_principal = frame_principal;
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 917, 791);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		setResizable(false);
 
 		int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
 		int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -42,7 +48,8 @@ public class Dialog_solution extends JDialog {
 		setLocation(x, y);
 
 		int posX = -150;
-		int posY = 27;
+		int posY = 0;
+		int separadorAncho = 5; // Ancho del separador
 
 		for (int i = 0; i < 36; i++) {
 			if (i % 6 == 0 && i != 0) {
@@ -50,10 +57,35 @@ public class Dialog_solution extends JDialog {
 				posX = -150;
 			}
 			posX += 150;
-			JLabel label = new JLabel("");
+			JLabel label = new JLabel();
 			label.setBounds(posX, posY, 150, 125);
-			mapaImagenes.put(i, label);
 			contentPanel.add(label);
+			mapaImagenes.put(i, label);
+
+			// Agregar separadores horizontales
+			if (i < 6) {
+				JSeparator separatorVertical = new JSeparator(SwingConstants.VERTICAL);
+				separatorVertical.setBounds(posX + 150, posY, separadorAncho, screenHeight);
+				separatorVertical.setForeground(Color.BLACK);
+				separatorVertical.setBackground(Color.BLACK);
+				contentPanel.add(separatorVertical);
+			}
+
+			// Agregar separadores verticales
+			if (i % 6 == 0) {
+				JSeparator separatorHorizontal = new JSeparator(SwingConstants.HORIZONTAL);
+				separatorHorizontal.setBounds(posX, posY + 125, screenWidth, separadorAncho);
+				separatorHorizontal.setForeground(Color.BLACK);
+				separatorHorizontal.setBackground(Color.BLACK);
+				contentPanel.add(separatorHorizontal);
+				if (i == 0) {
+					separatorHorizontal = new JSeparator(SwingConstants.HORIZONTAL);
+					separatorHorizontal.setBounds(posX, posY, screenWidth, separadorAncho);
+					separatorHorizontal.setForeground(Color.BLACK);
+					separatorHorizontal.setBackground(Color.BLACK);
+					contentPanel.add(separatorHorizontal);
+				}
+			}
 		}
 		crear_solucion();
 	}
