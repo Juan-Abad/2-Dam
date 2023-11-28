@@ -1,11 +1,15 @@
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,10 +19,12 @@ import javax.swing.JLabel;
 
 public class Frame_principal extends JFrame {
 
-	static TreeMap<Integer, JLabel> mapaImagenes = new TreeMap<Integer, JLabel>();
-	static TreeMap<Integer, ArrayList<Integer>> mapa_generado = new TreeMap<Integer, ArrayList<Integer>>();
-	static Integer turno = 0;
-	static Integer pos_imagen_seleccionada;
+	private TreeMap<Integer, JLabel> mapaImagenes = new TreeMap<Integer, JLabel>();
+	private TreeMap<Integer, ArrayList<Integer>> mapa_generado = new TreeMap<Integer, ArrayList<Integer>>();
+	private Integer turno = 0;
+	private Integer pos_imagen_seleccionada;
+	private Dialog_playAgain play_again;
+	private Dialog_solution solution_dialog;
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -45,16 +51,63 @@ public class Frame_principal extends JFrame {
 	public Frame_principal() {
 		setTitle("Juego de memoria");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 917, 837);
+		
+		int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+		int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+		int x = (screenWidth - getWidth()) / 2;
+		int y = (screenHeight - screenHeight/2 - getHeight()*2) / 2;
+		
+		setBounds(x, y, 917, 837);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JToolBar toolBar = new JToolBar();
-		toolBar.setBounds(0, 0, 87, 16);
-		contentPane.add(toolBar);
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(0, 0, 139, 22);
+		comboBox.addItem("Reiniciar"); // Agrega el ítem "Reiniciar"
+		comboBox.addItem("Jugar nueva partida");
+		comboBox.addItem("Mostrar Solución");
+		comboBox.addItem("Quitar Solución");
+		comboBox.addItem("Salir");
+
+		comboBox.setSelectedIndex(-1);
+		comboBox.setRenderer(new TitleComboBoxRenderer("Opciones"));
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> combo = (JComboBox<String>) e.getSource();
+				String selectedItem = (String) combo.getSelectedItem();
+				if (selectedItem != null) {
+					switch (selectedItem) {
+					case "Reiniciar":
+						resetGame();
+						break;
+					case "Jugar nueva partida":
+						resetGame();
+						mapa_generado.clear();
+						generarJuego();
+						solution_dialog.crear_solucion();
+						break;
+					case "Mostrar Solución":
+						solution_dialog.setVisible(true);
+						break;
+					case "Quitar Solución":
+						if (solution_dialog.isVisible())
+							solution_dialog.setVisible(false);
+						break;
+					case "Salir":
+						if (solution_dialog.isVisible())
+							solution_dialog.setVisible(false);
+						play_again.dispose();
+						dispose();
+						break;
+					}
+				}
+			}
+		});
+		contentPane.add(comboBox);
 
 		int posX = -150;
 		int posY = 27;
@@ -71,6 +124,9 @@ public class Frame_principal extends JFrame {
 			mapaImagenes.put(i, label);
 		}
 		generarJuego();
+
+		play_again = new Dialog_playAgain(Frame_principal.this);
+		solution_dialog = new Dialog_solution(Frame_principal.this);
 	}
 
 	MouseAdapter adapter = new MouseAdapter() {
@@ -82,13 +138,11 @@ public class Frame_principal extends JFrame {
 						if (turno == 0) {
 							for (Integer i : mapa_generado.keySet()) {
 								if (mapa_generado.get(i).get(0).equals(index)) {
-									System.out.println("ac");
-									mapaImagenes.get(index).setIcon(new ImageIcon("imagenes\\" + i + ".jpeg"));
+									mapaImagenes.get(index).setIcon(redimensionar_imagen("imagenes\\" + i + ".jpeg"));
 									pos_imagen_seleccionada = mapa_generado.get(i).get(0);
 									turno = 1;
 								} else if (mapa_generado.get(i).get(1).equals(index)) {
-									System.out.println("al");
-									mapaImagenes.get(index).setIcon(new ImageIcon("imagenes\\" + i + ".jpeg"));
+									mapaImagenes.get(index).setIcon(redimensionar_imagen("imagenes\\" + i + ".jpeg"));
 									pos_imagen_seleccionada = mapa_generado.get(i).get(1);
 									turno = 1;
 								}
@@ -96,7 +150,7 @@ public class Frame_principal extends JFrame {
 						} else {
 							for (Integer i : mapa_generado.keySet()) {
 								if (mapa_generado.get(i).contains(index)) {
-									mapaImagenes.get(index).setIcon(new ImageIcon("imagenes\\" + i + ".jpeg"));
+									mapaImagenes.get(index).setIcon(redimensionar_imagen("imagenes\\" + i + ".jpeg"));
 									turno = 0;
 								}
 							}
@@ -112,7 +166,6 @@ public class Frame_principal extends JFrame {
 									}
 								}
 								if (!imagenes_correspondientes) {
-									System.out.println(pos_imagen_seleccionada + " " + index);
 									try {
 										Thread.sleep(1000);
 									} catch (InterruptedException e1) {
@@ -123,12 +176,13 @@ public class Frame_principal extends JFrame {
 									mapaImagenes.get(index).setIcon(null);
 									turno = 0;
 									pos_imagen_seleccionada = null;
-									System.out.println(pos_imagen_seleccionada + " " + index);
 								}
 							});
 						}
 					}
 				}
+				if (comprobar_partida_ganada())
+					play_again.setVisible(true);
 			}
 		}
 	};
@@ -166,8 +220,61 @@ public class Frame_principal extends JFrame {
 			mapa_generado.get(i).add(posicion_aleatoria_2);
 		}
 	}
-	
+
 	public void resetGame() {
-		for(Integer index: mapaImagenes.keySet()) mapaImagenes.get(index).setIcon(null);
+		for (Integer index : mapaImagenes.keySet())
+			mapaImagenes.get(index).setIcon(null);
 	}
+
+	public boolean comprobar_partida_ganada() {
+		boolean partida_ganada = true;
+		for (Integer index : mapaImagenes.keySet()) {
+			if (mapaImagenes.get(index).getIcon() == null)
+				partida_ganada = false;
+		}
+		return partida_ganada;
+	}
+	
+	public static ImageIcon redimensionar_imagen(String ruta) {
+		ImageIcon icon = new ImageIcon(ruta); // Carga la imagen
+		Image image = icon.getImage(); // Obtén la imagen del ImageIcon
+
+		// Redimensiona la imagen a un tamaño específico
+		int anchoDeseado = 150; // Ancho deseado en píxeles
+		int altoDeseado = 170;  // Alto deseado en píxeles
+		Image imagenRedimensionada = image.getScaledInstance(anchoDeseado, altoDeseado, Image.SCALE_SMOOTH);
+
+		// Crea un nuevo ImageIcon con la imagen redimensionada
+		ImageIcon iconoRedimensionado = new ImageIcon(imagenRedimensionada);
+		return iconoRedimensionado;
+	}
+
+	public TreeMap<Integer, JLabel> getMapaImagenes() {
+		return mapaImagenes;
+	}
+
+	public TreeMap<Integer, ArrayList<Integer>> getMapa_generado() {
+		return mapa_generado;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public MouseAdapter getAdapter() {
+		return adapter;
+	}
+
+	public Dialog_playAgain getPlay_again() {
+		return play_again;
+	}
+
+	public Dialog_solution getSolution_dialog() {
+		return solution_dialog;
+	}
+
 }
