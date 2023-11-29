@@ -66,7 +66,7 @@ public class Frame_principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(0, 0, 139, 26);
 		comboBox.addItem("Reiniciar");
 		comboBox.addItem("Jugar nueva partida");

@@ -15,13 +15,20 @@ public class Ruso extends Thread {
 
 	public void run() {
 		while (true) {
+			while(claseNombre.getNombre()!=null) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			enviar_nombre(nombre);
 		}
 	}
 
 	public void enviar_nombre(String nombre) {
 		synchronized (claseNombre) {
-			
+			claseNombre.setNombre(nombre);
 		}
 	}
 }
