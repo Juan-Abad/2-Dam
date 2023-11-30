@@ -1,35 +1,34 @@
 package ej18_Reyes_Magos;
 
-public class Rey {
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
+public class Rey {// Clase Rey
 	private Integer idRey;
 	private static Integer siguienteID = 1;
-	private Boolean disponible = true;
-	private String nombre_rey;
-	private Buzon buzon;
+	private Boolean disponible = true;// variable Boolean, indica si el rey mago est disponible para recibir a un niño
+	private String nombre_rey;// variable String nombre del rey
+	private Buzon buzon;// objeto de la clase Buzon, se inicializa en el constructor
 
-	public Rey(String nombre_rey, Buzon buzon) {
+	public Rey(String nombre_rey, Buzon buzon) {// contructor, recibe por parametros el nombre del rey ey el objeto de
+												// la clase Buzon
 		this.idRey = siguienteID;
 		siguienteID++;
 		this.nombre_rey = nombre_rey;
 		this.buzon = buzon;
 	}
 
-	synchronized public void recibir_kid() {
-		while (!disponible) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+	synchronized public void recibir_kid() {// metodo synchrnized recibir_kir, el metodo comprueba si el rey esta
+											// disponible, en caso negativo el hilo se espera, si esta disponible el
+											// hilo kid ocupa al rey
 		System.out.println("Rey: " + this.nombre_rey + ", recibe al niño: " + Thread.currentThread());
 		try {
-			Thread.sleep((int) Math.random()*1000);
+			Thread.sleep((int) Math.random() * 1000);// el hilo se queda hablando con el rey de 0 a 999 milisegundos
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		buzon.recibir_carta(this);
-		notifyAll();
+		buzon.recibir_carta(this);// el buzon recibe una carta con el objeto rey que ha llamado al metodo
 	}
 
 	public static Integer getSiguienteID() {

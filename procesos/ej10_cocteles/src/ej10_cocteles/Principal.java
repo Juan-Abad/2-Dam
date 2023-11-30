@@ -1,22 +1,24 @@
 package ej10_cocteles;
 
-import java.util.ArrayList;
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
 
 public class Principal {
 
-	public static void main(String[] args) {
-		ArrayList<Camarero> camarerosList = new ArrayList<Camarero>();
+	public static void main(String[] args) {// main
 		Thread hilos_camarero;
-		for (int i = 0; i < 3; i++) {
-			camarerosList.add(new Camarero());
-		}
-		Camarero.getListaGrifos().add(new Grifo("Soda"));
-		Camarero.getListaGrifos().add(new Grifo("Zumo"));
-		Camarero.getListaGrifos().add(new Grifo("Tabasco"));
+		Camarero.getListaGrifos().add(new Grifo("Soda"));// accede al arrayList estatico de la clase camarero, añade el
+															// grifo de SODA
+		Camarero.getListaGrifos().add(new Grifo("Zumo"));// accede al arrayList estatico de la clase camarero, añade el
+															// grifo de ZUMO
+		Camarero.getListaGrifos().add(new Grifo("Tabasco"));// accede al arrayList estatico de la clase camarero, añade
+															// el grifo de TABASCO
 
-		for (int i = 0; i < 2; i++) {
-			hilos_camarero= new Camarero();
-			hilos_camarero.start();
+		for (int i = 0; i < 2; i++) {// for que va creando camareros y los pone a correr
+			hilos_camarero = new Camarero();// crea un camarero y los guarda en el ArrayList
+			hilos_camarero.start();// pone a correr el camarero
 		}
 	}
 

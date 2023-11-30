@@ -1,21 +1,26 @@
 package ej12_Fabrica_munyecas;
 
-public class Trabajador extends Thread {
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
+public class Trabajador extends Thread {// Clase trabajador, extiende de Thread
 	private Carro carro;
 	private Integer idTrabajador;
 	private static Integer idSiguiente = 1;
 
-	public Trabajador(Carro carro) {
+	public Trabajador(Carro carro) {// conructor de la clase
 		this.idTrabajador = idSiguiente;
 		idSiguiente++;
 		this.carro = carro;
 	}
 
-	public void run() {
+	public void run() {// metodo del hilo, se ejecuta constantemente, coge muñeacas del carro y las
+						// embala
 		while (true) {
-            carro.cogerDelCarro();
+			carro.cogerDelCarro();// coge muñeca del carro
 			try {
-				sleep((int) (Math.random() * 1000));
+				sleep((int) (Math.random() * 1000));// tiempo que tarda en embalar una muñeca
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

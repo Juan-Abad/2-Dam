@@ -1,5 +1,8 @@
 package ej06_Acuario;
-
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
 import java.util.concurrent.Semaphore;
 
 public class Principal {

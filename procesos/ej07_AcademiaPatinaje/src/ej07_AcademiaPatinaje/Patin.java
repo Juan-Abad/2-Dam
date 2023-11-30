@@ -1,18 +1,22 @@
 package ej07_AcademiaPatinaje;
 
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
 public class Patin {
 
 	private Integer idPatin = 0;
 	private static Integer idSiguiente = 1;
 
-	private Boolean patinDerecho = true;//variable que almacena si el patin derecho esta disponible
-	private Boolean patinIzquierdo = true;//variable que almacena si el patin izquierdo esta disponible
+	private Boolean patinDerecho = true;// variable que almacena si el patin derecho esta disponible
+	private Boolean patinIzquierdo = true;// variable que almacena si el patin izquierdo esta disponible
 
 	private boolean parCompleto = true;// variable que indica si el par de patines esta completo
 
-	private Integer numeroPie;//numero de pie del par de patines
+	private Integer numeroPie;// numero de pie del par de patines
 
-	public Patin(Integer numPie) {//contructos, se le pasa el numero de pie
+	public Patin(Integer numPie) {// contructos, se le pasa el numero de pie
 		idPatin = idSiguiente;
 		idSiguiente++;
 		this.numeroPie = numPie;

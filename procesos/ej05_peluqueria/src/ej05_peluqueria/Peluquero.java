@@ -1,35 +1,51 @@
 package ej05_peluqueria;
 
-public class Peluquero extends Thread {
-	private boolean ocupado = false;
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
+public class Peluquero {
+	private Peluqueria peluqueria;
 	private Integer idPeluquero;
 	private static Integer siguienteID = 1;
+	private boolean ocupado = false;
 
-	public Peluquero() {
+	public Peluquero(Peluqueria peluqueria) {
+		this.peluqueria = peluqueria;
 		this.idPeluquero = siguienteID;
 		siguienteID++;
 	}
 
-	public void run() {
-		while (true) {
-			while (ocupado == true) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+	public synchronized void atenderCliente(Cliente cliente) {
+		System.out.println("Peluquero atendiendo a " + cliente.getIdCliente());
+		try {
+			Thread.sleep((int) (Math.random() * 1000));
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
 		}
+
+		System.out.println("Peluquero terminó de atender a " + cliente.getIdCliente());
+		ocupado = false;
 	}
 
-	public void atender_cliente(Cliente cliente) {
-		ocupado = true;
-		System.out.println("Peluquero: " + idPeluquero+" atiende a cliente: "+cliente.getIdCliente());
-		try {
-			sleep((int) ((Math.random() * 150) + 50));
-			System.out.println("El peluquero "+idPeluquero+" termina");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	public Peluqueria getPeluqueria() {
+		return peluqueria;
 	}
+
+	public Integer getIdPeluquero() {
+		return idPeluquero;
+	}
+
+	public static Integer getSiguienteID() {
+		return siguienteID;
+	}
+
+	synchronized public boolean isOcupado() {
+		return ocupado;
+	}
+
+	synchronized public void setOcupado(boolean ocupado) {
+		this.ocupado = ocupado;
+	}
+
 }

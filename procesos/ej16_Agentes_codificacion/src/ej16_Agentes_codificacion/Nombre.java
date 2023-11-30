@@ -1,5 +1,9 @@
 package ej16_Agentes_codificacion;
 
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
 public class Nombre {
 	private String nombre = null;
 
@@ -11,5 +15,5 @@ public class Nombre {
 		this.nombre = nombre;
 		notifyAll();
 	}
-	
+
 }

@@ -1,5 +1,9 @@
 package ej16_Agentes_codificacion;
 
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
 public class Principal {
 
 	public static void main(String[] args) {

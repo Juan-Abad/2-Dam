@@ -1,5 +1,9 @@
 package ej16_Agentes_codificacion;
 
+/*
+ * author: Juan Abad Hernández
+ * Date: 30/11/2023
+ */
 public class Ruso extends Thread {
 	private Nombre claseNombre;
 	private String nombre;
@@ -14,24 +18,24 @@ public class Ruso extends Thread {
 	}
 
 	public void run() {
-	    while (true) {
-	        synchronized (claseNombre) {
-	            while (claseNombre.getNombre() != null) {
-	                try {
-	                    claseNombre.wait();
-	                } catch (InterruptedException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	            enviar_nombre(nombre);
-	            claseNombre.notifyAll(); // Notificar a todos los hilos en espera
-	        }
-	    }
+		while (true) {
+			synchronized (claseNombre) {
+				while (claseNombre.getNombre() != null) {
+					try {
+						claseNombre.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				enviar_nombre(nombre);
+				claseNombre.notifyAll(); // Notificar a todos los hilos en espera
+			}
+		}
 	}
 
 	public void enviar_nombre(String nombre) {
 		synchronized (claseNombre) {
-			System.out.println("Hilo ruso: "+idRuso+", introduce nombre: "+nombre);
+			System.out.println("Hilo ruso: " + idRuso + ", introduce nombre: " + nombre);
 			claseNombre.setNombre(nombre);
 		}
 	}
