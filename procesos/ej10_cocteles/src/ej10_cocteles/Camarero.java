@@ -3,7 +3,7 @@ package ej10_cocteles;
 import java.util.ArrayList;
 
 public class Camarero extends Thread {
-	private static ArrayList<Grifo> listaGrifos = new ArrayList<Grifo>();
+	private static ArrayList<Grifo> listaGrifos = new ArrayList<Grifo>();//
 
 	private Integer idCamarero;
 	private static Integer siguienteID = 1;
