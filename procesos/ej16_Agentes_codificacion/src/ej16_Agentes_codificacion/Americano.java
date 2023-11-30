@@ -8,18 +8,25 @@ public class Americano extends Thread {
 	}
 
 	public void run() {
-		while (true) {
-			while (claseNombre.getNombre() == null) {
-				try {
-					wait();
+	    while (true) {
+	        synchronized (claseNombre) {
+	            while (claseNombre.getNombre() == null) {
+	                try {
+	                    claseNombre.wait();
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            try {
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
-			synchronized (claseNombre) {
-				System.out.println(claseNombre.getNombre().toUpperCase());
-				claseNombre.setNombre(null);
-			}
-		}
+	            System.out.println(claseNombre.getNombre().toUpperCase());
+	            claseNombre.setNombre(null);
+	            claseNombre.notifyAll(); // Notificar a todos los hilos en espera
+	        }
+	    }
 	}
+
 }

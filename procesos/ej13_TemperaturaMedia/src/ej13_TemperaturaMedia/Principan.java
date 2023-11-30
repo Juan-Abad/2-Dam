@@ -18,7 +18,6 @@ public class Principan {
                 Process proceso = processBuilder.start();
                 // Captura la salida del proceso
                 BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
-                BufferedReader errorReader = new BufferedReader(new InputStreamReader(proceso.getErrorStream())); // Capturar la salida de error
                 String linea;
                 while ((linea = reader.readLine()) != null) {
                     // Muestra la salida de Principal
@@ -26,11 +25,6 @@ public class Principan {
                     // Puedes asignar el valor a temperaturaMedia si es lo que necesitas
                     // temperaturaMedia = Integer.parseInt(linea);
                 }
-                // Muestra la salida de error, si la hay
-                while ((linea = errorReader.readLine()) != null) {
-                    System.err.println("Error de Principal: " + linea);
-                }
-                // Espera a que el proceso termine
                 proceso.waitFor();
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();

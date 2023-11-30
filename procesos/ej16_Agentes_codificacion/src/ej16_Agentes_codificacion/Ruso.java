@@ -14,20 +14,24 @@ public class Ruso extends Thread {
 	}
 
 	public void run() {
-		while (true) {
-			while(claseNombre.getNombre()!=null) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			enviar_nombre(nombre);
-		}
+	    while (true) {
+	        synchronized (claseNombre) {
+	            while (claseNombre.getNombre() != null) {
+	                try {
+	                    claseNombre.wait();
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            enviar_nombre(nombre);
+	            claseNombre.notifyAll(); // Notificar a todos los hilos en espera
+	        }
+	    }
 	}
 
 	public void enviar_nombre(String nombre) {
 		synchronized (claseNombre) {
+			System.out.println("Hilo ruso: "+idRuso+", introduce nombre: "+nombre);
 			claseNombre.setNombre(nombre);
 		}
 	}

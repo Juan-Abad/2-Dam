@@ -13,10 +13,9 @@ public class Principal {
 			ruso = new Ruso(nombres[i], nombre);
 			ruso.start();
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 1; i++) {
 			americano = new Americano(nombre);
 			americano.start();
 		}
 	}
-
 }

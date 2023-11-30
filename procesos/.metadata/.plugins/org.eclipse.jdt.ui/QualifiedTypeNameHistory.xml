@@ -2,12 +2,10 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.lang.ProcessBuilder.Redirect"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
-    <fullyQualifiedTypeName name="java.io.InputStream"/>
     <fullyQualifiedTypeName name="java.lang.Thread"/>
     <fullyQualifiedTypeName name="java.awt.desktop.ScreenSleepEvent"/>
     <fullyQualifiedTypeName name="Hilo"/>
     <fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
-    <fullyQualifiedTypeName name="java.util.TreeMap"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="ej07_AcademiaPatinaje.Patinadores"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
@@ -16,5 +14,9 @@
     <fullyQualifiedTypeName name="ej12_Fabrica_munyecas.Trabajador"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="java.lang.ProcessBuilder"/>
+    <fullyQualifiedTypeName name="java.io.InputStream"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.TreeMap"/>
+    <fullyQualifiedTypeName name="ej05_peluqueria.Peluquero"/>
+    <fullyQualifiedTypeName name="ej05_peluqueria.Peluqueria"/>
 </qualifiedTypeNameHistroy>
