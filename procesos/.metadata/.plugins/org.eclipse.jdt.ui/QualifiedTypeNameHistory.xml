@@ -19,4 +19,8 @@
     <fullyQualifiedTypeName name="ej05_peluqueria.Peluquero"/>
     <fullyQualifiedTypeName name="ej05_peluqueria.Peluqueria"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.CasaDeLosGatos"/>
+    <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.CuentoComida"/>
+    <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.CuencoComida"/>
+    <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.LocaGatos"/>
 </qualifiedTypeNameHistroy>
