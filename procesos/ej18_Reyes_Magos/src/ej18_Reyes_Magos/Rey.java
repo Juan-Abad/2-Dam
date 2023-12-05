@@ -22,7 +22,7 @@ public class Rey {// Clase Rey
 	synchronized public void recibir_kid() {// metodo synchrnized recibir_kir, el metodo comprueba si el rey esta
 											// disponible, en caso negativo el hilo se espera, si esta disponible el
 											// hilo kid ocupa al rey
-		System.out.println("Rey: " + this.nombre_rey + ", recibe al niño: " + Thread.currentThread());
+		System.out.println("Rey: " + this.nombre_rey + ", recibe al niño: " + Thread.currentThread().getId());
 		try {
 			Thread.sleep((int) Math.random() * 1000);// el hilo se queda hablando con el rey de 0 a 999 milisegundos
 		} catch (InterruptedException e) {

@@ -31,8 +31,7 @@ public class Kid extends Thread {// clase Kid extiende de Thread
 			buzon.recibir_carta(null);// deja la carta, el metodo recibe por parametros null indicando que es carta
 										// enviada sin rey
 		} else {
-			listaReyes.get(((int) (Math.random() * 2 + 1))).recibir_kid();// aleatoriamente el niño elige un rey y llama
-																			// al metodo recibir_kid
+			listaReyes.get(((int) (Math.random() * 2 + 1))).recibir_kid();// aleatoriamente el niño elige un rey y llama															// al metodo recibir_kid
 		}
 	}
 
