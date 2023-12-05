@@ -13,7 +13,7 @@ public class Principal {
 										// entradas
 		entrada.inicializarEntradas(numMaxEntradas);// se inicializan las entradas, pasando el numero de entradas que se
 													// pondran en venta
-		for (int i = 0; i < 10; i++) {// for para crear 10 compradores
+		for (int i = 0; i < 40; i++) {// for para crear 10 compradores
 			comprador = new Comprador();// se crea el comprador
 			comprador.start();// iniciamos el hilo
 		}

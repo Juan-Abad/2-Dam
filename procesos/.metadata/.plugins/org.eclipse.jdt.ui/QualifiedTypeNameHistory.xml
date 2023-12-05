@@ -20,7 +20,7 @@
     <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.CuentoComida"/>
     <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.CuencoComida"/>
     <fullyQualifiedTypeName name="ej_Loca_de_los_gatos.LocaGatos"/>
-    <fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
-    <fullyQualifiedTypeName name="java.util.TreeMap"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.TreeMap"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
 </qualifiedTypeNameHistroy>

@@ -25,7 +25,7 @@ public class Comprador extends Thread {
 															// argumentos el numero de entradas a comprar, el numero es
 															// aleatorio entre 1 y 10
 			try {
-				sleep((int) (Math.random() * 2000));// el hilo Comprador duerme durante entre 0 a 1999 milisegundos
+				sleep((int) (Math.random() * 10000));// el hilo Comprador duerme durante entre 0 a 1999 milisegundos
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -38,72 +38,78 @@ public class Comprador extends Thread {
 		}
 	}
 
-	public void comprar_entradas(int numEntradas) {// metodo comprar_entradas, recibe el numero de entradas a comprar
-		int entradasCompradas = 0;// variable que guarda el numero de entradas que ha comprado
-		for (Entrada entrada : Entrada.getListaEntradas()) {// recorremos el arrayList estatico de la clase Entrada,
-															// recibiendo en cada iteracion una entrada que se pueso a
-															// la venta
-			if (entrada.getIsAvailable() && entradasCompradas < numEntradas) {// se comprueba el estado de la entrada,
-																				// si esta disponible, y el numero de
-																				// entradas que lleva compradas es menor
-																				// que el que solicitaba comprar entra.
-				synchronized (entrada) {// Se sincroniza el objeto entrada
+	synchronized public void comprar_entradas(int numEntradas) {// metodo comprar_entradas, recibe el numero de entradas
+																// a comprar
+		synchronized (Entrada.class) {
+			int entradasCompradas = 0;// variable que guarda el numero de entradas que ha comprado
+			for (Entrada entrada : Entrada.getListaEntradas()) {// recorremos el arrayList estatico de la clase Entrada,
+																// recibiendo en cada iteracion una entrada que se pueso
+																// a
+																// la venta
+				if (entrada.getIsAvailable() && entradasCompradas < numEntradas) {// se comprueba el estado de la
+																					// entrada,
+																					// si esta disponible, y el numero
+																					// de
+																					// entradas que lleva compradas es
+																					// menor
+																					// que el que solicitaba comprar
+																					// entra.
+					// Se sincroniza el objeto entrada
 					if (entrada.getIsAvailable()) {// se comprueba si la entrada esta disponible
 						entrada.setIsAvailable(false);// se compra la entrada, poniendo la disponibilidad de la misma en
 														// falso
-						System.out.println("Comprador: " + idComprador + ", compra entrada " + entrada.getIdEntrada());// imprime
-																														// que
-																														// comprador
-																														// y
-																														// que
-																														// entrada
-																														// ha
-																														// sido
-																														// comprada
 						entradaList.add(entrada);// añadimos a la lista de entradas del comprador otra entrada
 						entradasCompradas++;// sumamos uno al numero de entradas que lleva compradas(es para gestionar
 											// el numero de iteraciones, que sea el indicado por parametros)
 					}
+
 				}
 			}
+			Entrada.setNumeroEntradasDisponibles(Entrada.getNumeroEntradasDisponibles() - entradasCompradas);// cambiamos
+																												// el
+																												// numero
+																												// de
+																												// entradas
+																												// disponibles,
+																												// quitando
+																												// las
+																												// entradas
+																												// que
+																												// se
+																												// acaban
+																												// de
+			System.out.println("Comprador: " + idComprador + ", compra " + entradasCompradas + " entradas, restantes "
+					+ Entrada.getNumeroEntradasDisponibles());// imprime // comprar
+
 		}
-		Entrada.setNumeroEntradasDisponibles(Entrada.getNumeroEntradasDisponibles() - entradasCompradas);// cambiamos el
-																											// numero de
-																											// entradas
-																											// disponibles,
-																											// quitando
-																											// las
-																											// entradas
-																											// que se
-																											// acaban de
-																											// comprar
 	}
 
 	public synchronized void vender_entradas(int numEntradas) {// metodo synchronized para vender entradas, se pasa por
 																// parametros el numero de entradas que se quieren
 																// vender
-		for (int i = 0; i < numEntradas; i++) {// iteramos segun el numero de entradas a vender
-			if (!entradaList.isEmpty()) {// comprobamos que la lista de entradas del comprador no este vacia(que tenga
-											// alguna comprada)
-				Entrada entradaAVender = entradaList.remove(entradaList.size() - 1);// Se guarda la entrada, para luego
-																					// imprimir su id y cambiar su
-																					// estado a disponible, ademas se
-																					// elimina la entrada de la lista de
-																					// entradas del comprador
-				System.out.println("Comprador: " + idComprador + ", vende entrada " + entradaAVender.getIdEntrada());// se
-																														// imprime
-																														// el
-																														// comprador
-																														// y
-																														// la
-																														// entrada
-																														// vendida
-				entradaAVender.setIsAvailable(true);// se pone disponible la entrada
-				Entrada.setNumeroEntradasDisponibles(Entrada.getNumeroEntradasDisponibles() + 1);// añadimos uno al
-																									// numero de
-																									// entradas que
-																									// estan a la venta
+		synchronized (Entrada.class) {
+			for (int i = 0; i < numEntradas; i++) {// iteramos segun el numero de entradas a vender
+				if (!entradaList.isEmpty()) {// comprobamos que la lista de entradas del comprador no este vacia(que
+												// tenga
+												// alguna comprada)
+					Entrada entradaAVender = entradaList.remove(entradaList.size() - 1);// Se guarda la entrada, para
+																						// luego
+																						// imprimir su id y cambiar su
+																						// estado a disponible, ademas
+																						// se
+																						// elimina la entrada de la
+																						// lista de
+																						// entradas del comprador
+					entradaAVender.setIsAvailable(true);// se pone disponible la entrada
+					Entrada.setNumeroEntradasDisponibles(Entrada.getNumeroEntradasDisponibles() + 1);// añadimos uno al
+																										// numero de
+																										// entradas que
+																										// estan a la
+																										// venta
+				}
 			}
+			System.out.println("Comprador: " + idComprador + ", vende " + numEntradas + " entradas, restantes "
+					+ Entrada.getNumeroEntradasDisponibles());
 		}
 	}
 
