@@ -4,8 +4,8 @@
     <fullyQualifiedTypeName name="ad2_excepciones.ExcepcionesConThrows"/>
     <fullyQualifiedTypeName name="ad3_operaciones.FicheroAccesoAleatorio"/>
     <fullyQualifiedTypeName name="ad3_operaciones.VolcadoBinario"/>
-    <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="java.io.File"/>
 </qualifiedTypeNameHistroy>
