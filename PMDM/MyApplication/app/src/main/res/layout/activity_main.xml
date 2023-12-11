@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="CALCULADORA"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_numero1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FF8484"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Escribe un número"
+        android:textColor="#830606"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_titulo" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_numero1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="#FF8484"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_numero2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_numero1">
+
+        <EditText
+            android:id="@+id/et_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text=""
+            android:inputType="number">
+
+        </EditText>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_numero2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FF8484"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Escribe otro número"
+        android:textColor="#830606"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/cv_numero2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_numero1" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_numero2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="#FF8484"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_numero3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_numero2">
+
+        <EditText
+            android:id="@+id/et_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text=""
+            android:inputType="number">
+
+        </EditText>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_numero3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FF8484"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Elige una operación"
+        android:textColor="#830606"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/rg_operations"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_numero2" />
+
+    <RadioGroup
+        android:id="@+id/rg_operations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checkedButton="@id/rdsuma"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/cv_btnCalcular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_numero3">
+
+        <RadioButton
+            android:id="@+id/rdsuma"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="4dp"
+            android:text="+"
+            android:theme="@style/RadioButton_theme"
+            android:textColor="#830606"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="4dp"
+            android:text="-"
+            android:theme="@style/RadioButton_theme"
+            android:textColor="#830606"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="4dp"
+            android:text="x"
+            android:theme="@style/RadioButton_theme"
+            android:textColor="#830606"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="4dp"
+            android:text="/"
+            android:theme="@style/RadioButton_theme"
+            android:textColor="#830606"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="4dp"
+            android:text="%"
+            android:theme="@style/RadioButton_theme"
+            android:textColor="#830606"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_btnCalcular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:textColor="@color/white"
+        app:cardBackgroundColor="#830606"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="CALCULAR"
+            android:textColor="@color/white"
+            android:textSize="36sp"/>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
