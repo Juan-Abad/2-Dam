@@ -54,7 +54,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:text=""
-            android:inputType="number">
+            android:inputType="numberSigned">
 
         </EditText>
     </androidx.cardview.widget.CardView>
@@ -93,7 +93,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:text=""
-            android:inputType="number">
+            android:inputType="numberSigned">
 
         </EditText>
     </androidx.cardview.widget.CardView>
