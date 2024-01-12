@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pedidos_deporte>
+  <pedido>
+	<nombre>Juan Perez</nombre>
+	<numero_pedido>1234</numero_pedido>
+	<articulos>
+  	<articulo descripcion="Balon de futbol" cantidad="1"/>
+  		<articulo descripcion="Zapatillas de futbol" cantidad="2"/>
+	</articulos>
+  </pedido>
+  <pedido>
+	<nombre>Maria Garcia</nombre>
+	<numero_pedido>5678</numero_pedido>
+	<articulos>
+  	<articulo descripcion="Bicicleta" cantidad="3"/>
+  	<articulo descripcion="Casco de bicicleta" cantidad="4"/>
+	</articulos>
+  </pedido>
+  <pedido>
+	<nombre>Antonio Rodriguez</nombre>
+	<numero_pedido>9012</numero_pedido>
+	<articulos>
+  	<articulo descripcion="Raqueta de tenis" cantidad="1"/>
+  	<articulo descripcion="Pelotas de tenis" cantidad="2"/>
+	</articulos>
+  </pedido>
+</pedidos_deporte>
