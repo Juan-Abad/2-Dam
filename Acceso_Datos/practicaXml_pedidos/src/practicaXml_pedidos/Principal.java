@@ -13,9 +13,6 @@ import org.w3c.dom.NodeList;
 public class Principal {
 
 	public static void main(String[] args) {
-		AccesoDatos.conectar("jdbc:sqlite:abadHernandezEx.db");
-		AccesoDatos.crearTabla();
-		AccesoDatos.borrarDatosTabla();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
