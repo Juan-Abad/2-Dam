@@ -1,9 +1,7 @@
 package SAX;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 import org.xml.sax.helpers.*;
 import org.xml.sax.*;
@@ -23,7 +21,7 @@ class GestionContenido extends DefaultHandler {
 
 	private String nombre;
 	private Integer numero_pedido;
-	private HashMap<String, Integer> mapa_articulos = new HashMap<>();
+	private LinkedHashMap<String, String> lista = new LinkedHashMap();
 	private Integer orden = 0;
 
 	public GestionContenido() {
@@ -40,28 +38,38 @@ class GestionContenido extends DefaultHandler {
 
 	public void startElement(String uri, String nombre, String nombreC, Attributes atts) {
 		if (atts.getLength() == 0) {
-			System.out.printf("\t Principio Elemento: %s %n", nombre);
+			if (nombre.equals("pedido") || nombre.equals("pedidos_deporte")) {
+				System.out.printf("\n\t Principio Elemento: %s %n", nombre);
+			}
 			switch (nombre) {
 			case "nombre":
 				orden = 1;
+				break;
 			case "numero_pedido":
 				orden = 2;
-			case "articulos":
-				mapa_articulos.put(atts.getLocalName(0), Integer.parseInt(atts.getValue(0)));
-				mapa_articulos.put(atts.getLocalName(1), Integer.parseInt(atts.getValue(1)));
+				break;
+			default:
+				orden = 0;
 			}
 		} else {
-			System.out.println("\t\tAtributos: \n\t\t\t" + atts.getLocalName(0) + ": " + atts.getValue(0) + "\n\t\t\t"
-					+ atts.getLocalName(1) + ": " + atts.getValue(1));
+			if (nombre.equals("articulo")) {
+				lista.put(atts.getValue(0), atts.getValue(1));
+			}
 		}
 	}
 
 	public void endElement(String uri, String nombre, String nombreC) {
+		if (nombre.equals("pedido")) {
+			System.out.println("Nombre: " + this.nombre + "\nNumero pedido: " + numero_pedido);
+			for(String mapa: lista.keySet()) {
+				System.out.println("Articulos:\n\tDescripción: "+mapa+"\n\tCantidad: "+lista.get(mapa));
+			}
+			nombre = "";
+			numero_pedido = 0;
+			lista.clear();
+		}
 		if (nombre.equals("pedido") || nombre.equals("pedidos_deporte")) {
 			System.out.printf("Fin Elemento: %s \n", nombre);
-		}
-		if(nombre.equals("pedido")) {
-			System.out.println();
 		}
 	}
 
@@ -70,10 +78,13 @@ class GestionContenido extends DefaultHandler {
 		car = car.replaceAll("[\t\n]", "");
 		if (car != null && car.matches(".*[a-zA-Z0-9].*")) {
 			switch (orden) {
-			case 1: nombre = car;
-			case 2: numero_pedido = Integer.parseInt(car);
+			case 1:
+				nombre = car;
+				break;
+			case 2:
+				numero_pedido = Integer.parseInt(car);
+				break;
 			}
-			System.out.printf("\t\t Caracteres: %s %n", car);
 		}
 	}
 }
