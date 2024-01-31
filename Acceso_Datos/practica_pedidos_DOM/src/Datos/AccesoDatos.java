@@ -13,6 +13,22 @@ public class AccesoDatos {
 		} catch (SQLException e) {
 			System.out.println("Error conexión");
 		}
+		Statement smt;
+		String sentencia;
+		try {
+			smt = (Statement) conn.createStatement();
+			sentencia = "DELETE FROM pedidos";
+			smt.execute(sentencia);
+			sentencia = "DELETE FROM pedido_articulo";
+			smt.execute(sentencia);
+			sentencia = "DELETE FROM articulos";
+			smt.execute(sentencia);
+			sentencia = "DELETE FROM clientes";
+			smt.execute(sentencia);
+		} catch (SQLException e) {
+			System.out.println("Error crear tabla");
+			System.out.println(e.getErrorCode()+", "+e.getLocalizedMessage()+", "+e.getSQLState()+", "+e.getMessage());
+		}
 	}// fin_conectar
 
 	public static void desconectar() {
@@ -43,28 +59,29 @@ public class AccesoDatos {
 		}
 	}// fin_crearTabla
 
-	public static void insertarPedido(Integer numero_pedido, Integer numero_cliente, String fecha) {
+	public static void insertarPedido(Long numero_pedido, Long numero_cliente, String fecha) {
 		String sentencia = "INSERT INTO pedidos(numero_pedido,numero_cliente,fecha) VALUES (?,?,?)";
 		PreparedStatement smt;
 		try {
 			smt = conn.prepareStatement(sentencia);
-			smt.setInt(1, numero_pedido);
-			smt.setInt(2, numero_cliente);
+			smt.setLong(1, numero_pedido);
+			smt.setLong(2, numero_cliente);
 			smt.setString(3, fecha);
 			smt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("Error insertando pedido");
+			System.out.println(e.getMessage());
 
 		}
 	}// fin_insertarPedido
 	
-	public static void insertarPedido_articulo(Integer numero_pedido, Integer codigo_articulo, Integer cantidad) {
-		String sentencia = "INSERT INTO pedidos(numero_pedido,codigo_articulo,cantidad) VALUES (?,?,?)";
+	public static void insertarPedido_articulo(Long numero_pedido, Long codigo_articulo, Integer cantidad) {
+		String sentencia = "INSERT INTO pedido_articulo(numero_pedido,codigo_articulo,cantidad) VALUES (?,?,?)";
 		PreparedStatement smt;
 		try {
 			smt = conn.prepareStatement(sentencia);
-			smt.setInt(1, numero_pedido);
-			smt.setInt(2, codigo_articulo);
+			smt.setLong(1, numero_pedido);
+			smt.setLong(2, codigo_articulo);
 			smt.setInt(3, cantidad);
 			smt.executeUpdate();
 		} catch (SQLException e) {
@@ -73,12 +90,12 @@ public class AccesoDatos {
 		}
 	}// fin_insertarPedido_articulo
 	
-	public static void insertarArticulo(Integer codigo_articulo, String descripcion, String familia, Integer stock) {
-		String sentencia = "INSERT INTO pedidos(numero_pedido,numero_cliente,fecha) VALUES (?,?,?,?)";
+	public static void insertarArticulo(Long codigo_articulo, String descripcion, String familia, Integer stock) {
+		String sentencia = "INSERT INTO articulos(codigo_articulo,descripcion,familia,stock) VALUES (?,?,?,?)";
 		PreparedStatement smt;
 		try {
 			smt = conn.prepareStatement(sentencia);
-			smt.setInt(1, codigo_articulo);
+			smt.setLong(1, codigo_articulo);
 			smt.setString(2, descripcion);
 			smt.setString(3, familia);
 			smt.setInt(4, stock);
@@ -89,15 +106,15 @@ public class AccesoDatos {
 		}
 	}// fin_insertarArticulo
 	
-	public static void insertarCliente(Integer numero_cliente, String nombre, String direccion, Integer telefono) {
+	public static void insertarCliente(Long numero_cliente, String nombre, String direccion, Long telefono) {
 		String sentencia = "INSERT INTO pedidos(numero_pedido,numero_cliente,fecha) VALUES (?,?,?,?)";
 		PreparedStatement smt;
 		try {
 			smt = conn.prepareStatement(sentencia);
-			smt.setInt(1, numero_cliente);
+			smt.setLong(1, numero_cliente);
 			smt.setString(2, nombre);
 			smt.setString(3, direccion);
-			smt.setInt(4, telefono);
+			smt.setLong(4, telefono);
 			smt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("Error insertando cliente");
@@ -111,19 +128,32 @@ public class AccesoDatos {
 		String sentencia = "SELECT numero_pedido, numero_cliente FROM pedidos WHERE numero_pedido = '"+numero_pedido+"'";
 		try {
 			smt = conn.createStatement();
-			ResultSet rs = smt.executeQuery("SELECT * FROM pedidos");
-			int num=0;
+			ResultSet rs = smt.executeQuery(sentencia);
 			while(rs.next()) {
-				System.out.println(rs.getArray(num));
-				num++;
-			}
-			if(rs.wasNull()) {
-				resultado = 0;
-			}else {
+				System.out.println(rs.getLong("numero_cliente")+", "+rs.getLong("numero_pedido"));
 				resultado = 1;
 			}
 		} catch (SQLException e) {
 			System.out.println("Error obteniendo datos");
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
+	public static int comprobarPedido_articulo(Long numero_pedido, Long codigo_articulo) {
+		int resultado = 0;
+		Statement smt;
+		String sentencia = "SELECT numero_pedido, codigo_articulo FROM pedido_articulo WHERE numero_pedido = '"+numero_pedido+"' AND codigo_articulo = '"+codigo_articulo+"'";
+		try {
+			smt = conn.createStatement();
+			ResultSet rs = smt.executeQuery(sentencia);
+			while(rs.next()) {
+				System.out.println(rs.getLong("numero_pedido")+", "+rs.getLong("codigo_articulo")+", "+rs.getInt("cantidad"));
+				resultado = 1;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error obteniendo datos");
+			e.printStackTrace();
 		}
 		return resultado;
 	}

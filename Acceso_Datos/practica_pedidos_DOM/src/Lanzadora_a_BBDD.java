@@ -26,19 +26,17 @@ public class Lanzadora_a_BBDD {
 				Node pedid = pedidos.item(i);
 				if (pedid.getNodeType() == Node.ELEMENT_NODE) {
 					Element pedido = (Element) pedid;
-					AccesoDatos.insertarPedido(Integer.parseInt(getNodo("numero-pedido", pedido)), Integer.parseInt(getNodo("numero-cliente", pedido)), getNodo("fecha", pedido));
+					AccesoDatos.insertarPedido(Long.valueOf(getNodo("numero-pedido", pedido)), Long.valueOf(((getNodo("numero-cliente", pedido)))), getNodo("fecha", pedido));
 					NodeList articulos = pedido.getElementsByTagName("articulo");
 					for (int j = 0; j < articulos.getLength(); j++) {
 						Node arti = articulos.item(j);
 						if (arti.getNodeType() == Node.ELEMENT_NODE) {
 							Element articulo = (Element) arti;
-							getNodo("codigo", articulo);
-							getNodo("cantidad", articulo);
+							AccesoDatos.insertarPedido_articulo(Long.valueOf(getNodo("numero-pedido", pedido)), Long.valueOf(getNodo("codigo", articulo)) , Integer.parseInt(getNodo("cantidad", articulo)));
 						}
 					}
 				}
 			}
-			AccesoDatos.comprobarPedido(null, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
