@@ -25,12 +25,16 @@ public class ClientHandler extends Thread {
 				DataOutputStream dw = new DataOutputStream(s.getOutputStream());) {
 			dw.writeUTF("Hola jugador " + numero_jugador);
 			dr.readUTF();
-			dw.writeUTF(numero_jugador+"");
 			do {
 				numero = dr.readUTF();
-				System.out.println("numero:" + numero);
+				System.out.println("numero:" + numero + ", del jugador " + numero_jugador);
 				do {
 					loop = juego.recibe_numero(numero, this);
+					if (loop == 0) {
+						dw.writeUTF("numero_aceptado");
+					} else {
+						dw.writeUTF("numero_denegado");
+					}
 					try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {

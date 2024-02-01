@@ -16,17 +16,15 @@ public class Cliente {
 				DataOutputStream dw = new DataOutputStream(s.getOutputStream());) {
 			System.out.println(dr.readUTF());
 			dw.writeUTF("recibido");
-			System.out.println(dr.readUTF());
 			do {
 				dw.writeUTF(String.valueOf(Leer.pedirEntero("introduzca un entero")));
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (dr.readUTF().equals("numero_aceptado")) {
+					System.out.println("bien");
+				} else {
+					System.out.println("mal");
 				}
 			} while (true);
-			
+
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
