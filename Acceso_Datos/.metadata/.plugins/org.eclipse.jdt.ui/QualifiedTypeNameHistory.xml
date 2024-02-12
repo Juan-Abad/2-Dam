@@ -24,7 +24,6 @@
     <fullyQualifiedTypeName name="java.util.LinkedHashSet"/>
     <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
-    <fullyQualifiedTypeName name="Datos.AccesoDatos"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.ODB"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.ODBFactory"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.Objects"/>
@@ -37,4 +36,6 @@
     <fullyQualifiedTypeName name="java.math.BigInteger"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.impl.core.query.values.ValuesCriteriaQuery"/>
     <fullyQualifiedTypeName name="utilidades.Leer"/>
+    <fullyQualifiedTypeName name="java.lang.Thread"/>
+    <fullyQualifiedTypeName name="Datos.AccesoDatos"/>
 </qualifiedTypeNameHistroy>

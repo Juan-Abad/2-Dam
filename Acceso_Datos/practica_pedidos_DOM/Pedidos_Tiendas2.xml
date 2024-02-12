@@ -2,12 +2,12 @@
 <pedidos>
   <pedido>
     <numero-cliente>1234567890</numero-cliente>
-    <numero-pedido>12345</numero-pedido>
+    <numero-pedido>92345</numero-pedido>
     <fecha>2024-01-22</fecha>
     <articulos>
       <articulo>
         <codigo>123456</codigo>
-        <cantidad>10</cantidad>
+        <cantidad>190</cantidad>
       </articulo>
       <articulo>
         <codigo>234567</codigo>
@@ -22,7 +22,7 @@
     <articulos>
       <articulo>
         <codigo>345678</codigo>
-        <cantidad>20</cantidad>
+        <cantidad>30</cantidad>
       </articulo>
       <articulo>
         <codigo>456789</codigo>
@@ -32,7 +32,7 @@
   </pedido>
   <pedido>
     <numero-cliente>1234567891</numero-cliente>
-    <numero-pedido>12347</numero-pedido>
+    <numero-pedido>92347</numero-pedido>
     <fecha>2024-01-24</fecha>
     <articulos>
       <articulo>
@@ -40,14 +40,14 @@
         <cantidad>50</cantidad>
       </articulo>
       <articulo>
-        <codigo>678901</codigo>
+        <codigo>123456</codigo>
         <cantidad>60</cantidad>
       </articulo>
     </articulos>
   </pedido>
   <pedido>
     <numero-cliente>1234567892</numero-cliente>
-    <numero-pedido>12348</numero-pedido>
+    <numero-pedido>92348</numero-pedido>
     <fecha>2024-01-25</fecha>
     <articulos>
       <articulo>
@@ -59,7 +59,7 @@
         <cantidad>80</cantidad>
       </articulo>
       <articulo>
-        <codigo>123457</codigo>
+        <codigo>923457</codigo>
         <cantidad>10</cantidad>
       </articulo>
       <articulo>
@@ -70,7 +70,7 @@
   </pedido>
   <pedido>
     <numero-cliente>1234567893</numero-cliente>
-    <numero-pedido>12349</numero-pedido>
+    <numero-pedido>92349</numero-pedido>
     <fecha>2024-01-26</fecha>
     <articulos>
       <articulo>
@@ -78,8 +78,8 @@
         <cantidad>90</cantidad>
       </articulo>
       <articulo>
-        <codigo>012345</codigo>
-        <cantidad>100</cantidad>
+        <codigo>123457</codigo>
+        <cantidad>190</cantidad>
       </articulo>
     </articulos>
   </pedido>
