@@ -26,11 +26,11 @@ public class UDPservidor{
 		
 		//Visualizo la información
 		System.out.println ("Nuero de bytes recibidos "+ bytesRec);
-		System.out.println ("Contenido del paquete "+ paquete);
 		System.out.println ("Puerto del mensaje "+ recibido.getPort());
 		System.out.println ("IP de origen "+ recibido.getAddress().getHostAddress());
 		System.out.println("Puerto local del mensaje "+ socket.getLocalPort());
 		System.out.println("Puerto getPort "+ socket.getPort());
+		System.out.println ("Contenido del paquete "+ paquete);
 		socket.close();		
 	}
 }
