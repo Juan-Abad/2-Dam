@@ -1,7 +1,9 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,8 +19,22 @@ import utilidades.Leer;
 public class Lanzadora_a_BBDD {
 
 	public static void main(String[] args) {
-		AccesoDatos.conectar("jdbc:sqlite:abadHerna.db");
-		AccesoDatos.crearTabla();
+		Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("config.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Obtener la ruta del archivo XML desde el archivo de configuración
+        String rutaXML = properties.getProperty("ruta_xml"); //obtiene la ruta del archivo de configuración
+        if (rutaXML == null) { //comprueba que la ruta del archivo de configuración no es nula, si lo es se termina el programa
+            System.err.println("La propiedad 'ruta_xml' no está definida en el archivo de configuración.");
+            System.exit(0);
+        }
+		AccesoDatos.conectar("jdbc:sqlite:abadHerna.db"); //se conecta a la BBDD indicada
+		AccesoDatos.crearTabla(); //crea las tablas en la BBDD
+		
 		// codigo que inserta los clientes iniciales
 
 		/*
@@ -57,7 +73,7 @@ public class Lanzadora_a_BBDD {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			File archivo = new File("Pedidos_Tiendas2.xml");
+			File archivo = new File(rutaXML);
 	        if (!archivo.exists()) {
 	            System.out.println("El archivo no existe.");
 	            System.exit(0);
@@ -98,7 +114,7 @@ public class Lanzadora_a_BBDD {
 								Long codigo_articulo = Long.valueOf(getNodo("codigo", articulo));
 								if (!AccesoDatos.comprobarArticulo(codigo_articulo)) {
 									if (Leer.pedirEntero("El articulo con codigo " + codigo_articulo
-											+ " no existe en la BBDD, seleccione 1 o 2 si quiere crearlo o rechazar el pedido",
+											+ " no existe en la BBDD, seleccione 1 o 2 si quiere crearlo o rechazar el pedido "+numero_pedido,
 											"^[1-2]{1}") == 1) {
 										AccesoDatos.insertarArticulo(codigo_articulo, null, null, 500);
 										AccesoDatos.insertarPedido_articulo(numero_pedido, codigo_articulo, cantidad);
@@ -125,7 +141,7 @@ public class Lanzadora_a_BBDD {
 											break;
 										case 3:
 											AccesoDatos.eliminarPedido(numero_pedido);
-											System.out.println("Pedido eliminado");
+											System.out.println("Pedido "+numero_pedido+" eliminado");
 											break;
 										}
 									}
@@ -137,6 +153,15 @@ public class Lanzadora_a_BBDD {
 								"Ya existe el pedido, quiere reemplazarlo, modificarlo o ignorar. Responda con (1,2,3) respectivamente",
 								"^[1-3]{1}")) {
 						case 1:
+							if (!AccesoDatos.comprobarCliente(numero_cliente)) {
+								System.out.println(
+										"Cliene " + getNodo("numero-cliente", pedido) + " no existente en la BBDD");
+								if (AccesoDatos.insertarCliente(Long.valueOf(getNodo("numero-cliente", pedido)), null, null,
+										null)) {
+									System.out.println(
+											"Cliente " + getNodo("numero-cliente", pedido) + " creado con valores nulos");
+								}
+							}
 							boolean eliminado, insertado;
 							eliminado = AccesoDatos.eliminarPedido(numero_pedido);
 							insertado = AccesoDatos.insertarPedido(numero_pedido, numero_cliente, fecha);
@@ -190,8 +215,18 @@ public class Lanzadora_a_BBDD {
 							}
 							break;
 						case 2:
+							if (!AccesoDatos.comprobarCliente(numero_cliente)) {
+								System.out.println(
+										"Cliene " + getNodo("numero-cliente", pedido) + " no existente en la BBDD");
+								if (AccesoDatos.insertarCliente(Long.valueOf(getNodo("numero-cliente", pedido)), null, null,
+										null)) {
+									System.out.println(
+											"Cliente " + getNodo("numero-cliente", pedido) + " creado con valores nulos");
+
+								}
+							}
 							System.out.println("Pedido de la BBDD:");
-							AccesoDatos.mostratPedido(numero_pedido);
+							AccesoDatos.mostrarPedido(numero_pedido);
 							AccesoDatos.mostrarPedido_articulo(numero_pedido);
 							int opcion = 0;
 							while (opcion == 0) {

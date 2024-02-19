@@ -244,7 +244,7 @@ public class AccesoDatos {
 		}
 	}
 
-	public static void mostratPedido(Long numero_pedido) {
+	public static void mostrarPedido(Long numero_pedido) {
 		Statement smt;
 		String sentencia = "SELECT * FROM pedidos WHERE numero_pedido = '" + numero_pedido + "'";
 		try {
