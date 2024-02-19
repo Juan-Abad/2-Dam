@@ -81,7 +81,8 @@ public class Lanzadora_a_BBDD {
 			Document document = builder.parse(archivo);
 			document.getDocumentElement().normalize();
 			NodeList pedidos = document.getElementsByTagName("pedido");
-
+			
+			Boolean pedido_insertado = true;
 			for (int i = 0; i < pedidos.getLength(); i++) {
 				Node pedid = pedidos.item(i);
 				if (pedid.getNodeType() == Node.ELEMENT_NODE) {
@@ -180,6 +181,7 @@ public class Lanzadora_a_BBDD {
 											AccesoDatos.insertarPedido_articulo(numero_pedido, codigo_articulo,
 													cantidad);
 										} else {
+											pedido_insertado = false;
 											AccesoDatos.eliminarPedido(numero_pedido);
 											break;
 										}
@@ -203,6 +205,7 @@ public class Lanzadora_a_BBDD {
 												break;
 											case 3:
 												AccesoDatos.eliminarPedido(numero_pedido);
+												pedido_insertado = false;
 												System.out.println("Pedido eliminado");
 												break;
 											}
@@ -252,6 +255,7 @@ public class Lanzadora_a_BBDD {
 									}
 								} else if (opcion == 2) {
 									AccesoDatos.eliminarPedido(numero_pedido);
+									pedido_insertado = false;
 									System.out.println("Pedido eliminado");
 								}
 							}
@@ -260,6 +264,9 @@ public class Lanzadora_a_BBDD {
 							System.out.println("Pedido ignorado");
 							break;
 						}
+					}
+					if(pedido_insertado) {
+						System.out.println("Pedido "+numero_pedido+" insertado.");
 					}
 				}
 			}

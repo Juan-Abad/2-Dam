@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+    <name>pedidosDB</name>
+    <table>
+        <database></database>
+        <name>articulos</name>
+        <ddl>CREATE TABLE articulos(codigo_articulo Integer, descripcion text, familia text, stock Integer)</ddl>
+        <columns>
+            <column>
+                <name>codigo_articulo</name>
+                <type>Integer</type>
+            </column>
+            <column>
+                <name>descripcion</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>familia</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>stock</name>
+                <type>Integer</type>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">123456</value>
+                <value column="1"></value>
+                <value column="2">Balones baloncesto</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">234567</value>
+                <value column="1"></value>
+                <value column="2">Balones futbol</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">345678</value>
+                <value column="1"></value>
+                <value column="2">Balones futbol sala</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">456789</value>
+                <value column="1"></value>
+                <value column="2">Medias</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">567890</value>
+                <value column="1"></value>
+                <value column="2">Botas futbol</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">678901</value>
+                <value column="1"></value>
+                <value column="2">Espinilleras</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">789012</value>
+                <value column="1"></value>
+                <value column="2">Camisetas futbol</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">890123</value>
+                <value column="1"></value>
+                <value column="2">Camisetas baloncesto</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">123457</value>
+                <value column="1"></value>
+                <value column="2">Zapatillas baloncesto</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">234568</value>
+                <value column="1"></value>
+                <value column="2">Gorra</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">901234</value>
+                <value column="1"></value>
+                <value column="2">Pantalones balonceso</value>
+                <value column="3">500</value>
+            </row>
+            <row>
+                <value column="0">12345</value>
+                <value column="1"></value>
+                <value column="2">Pantalones futbol</value>
+                <value column="3">10</value>
+            </row>
+            <row>
+                <value column="0">923457</value>
+                <value column="1" null="true"/>
+                <value column="2" null="true"/>
+                <value column="3">500</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>clientes</name>
+        <ddl>CREATE TABLE clientes(numero_cliente Integer, nombre text, direccion text, telefono Integer)</ddl>
+        <columns>
+            <column>
+                <name>numero_cliente</name>
+                <type>Integer</type>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>direccion</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>telefono</name>
+                <type>Integer</type>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1234567890</value>
+                <value column="1">Juan Abad</value>
+                <value column="2">Av.Navarra</value>
+                <value column="3">978235252</value>
+            </row>
+            <row>
+                <value column="0">9876543210</value>
+                <value column="1">Pedro Martinez</value>
+                <value column="2">Av.Madrid</value>
+                <value column="3">973636452</value>
+            </row>
+            <row>
+                <value column="0">1234567891</value>
+                <value column="1">Martin Salazar</value>
+                <value column="2">Av.Catalunya</value>
+                <value column="3">972564678</value>
+            </row>
+            <row>
+                <value column="0">1234567892</value>
+                <value column="1">Pepe Garcia</value>
+                <value column="2">Jarque de Moncayo</value>
+                <value column="3">971536252</value>
+            </row>
+            <row>
+                <value column="0">1234567893</value>
+                <value column="1">Gustavo Prados</value>
+                <value column="2">Pablo Neruda</value>
+                <value column="3">970356789</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>pedido_articulo</name>
+        <ddl>CREATE TABLE pedido_articulo(numero_pedido Integer, codigo_articulo Integer, cantidad Integer)</ddl>
+        <columns>
+            <column>
+                <name>numero_pedido</name>
+                <type>Integer</type>
+            </column>
+            <column>
+                <name>codigo_articulo</name>
+                <type>Integer</type>
+            </column>
+            <column>
+                <name>cantidad</name>
+                <type>Integer</type>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">12345</value>
+                <value column="1">123456</value>
+                <value column="2">10</value>
+            </row>
+            <row>
+                <value column="0">12345</value>
+                <value column="1">234567</value>
+                <value column="2">20</value>
+            </row>
+            <row>
+                <value column="0">12346</value>
+                <value column="1">345678</value>
+                <value column="2">20</value>
+            </row>
+            <row>
+                <value column="0">12346</value>
+                <value column="1">456789</value>
+                <value column="2">40</value>
+            </row>
+            <row>
+                <value column="0">12347</value>
+                <value column="1">567890</value>
+                <value column="2">50</value>
+            </row>
+            <row>
+                <value column="0">12347</value>
+                <value column="1">678901</value>
+                <value column="2">60</value>
+            </row>
+            <row>
+                <value column="0">12348</value>
+                <value column="1">789012</value>
+                <value column="2">70</value>
+            </row>
+            <row>
+                <value column="0">12348</value>
+                <value column="1">890123</value>
+                <value column="2">80</value>
+            </row>
+            <row>
+                <value column="0">12348</value>
+                <value column="1">123457</value>
+                <value column="2">10</value>
+            </row>
+            <row>
+                <value column="0">12348</value>
+                <value column="1">234568</value>
+                <value column="2">20</value>
+            </row>
+            <row>
+                <value column="0">12349</value>
+                <value column="1">901234</value>
+                <value column="2">90</value>
+            </row>
+            <row>
+                <value column="0">12349</value>
+                <value column="1">12345</value>
+                <value column="2">100</value>
+            </row>
+            <row>
+                <value column="0">92345</value>
+                <value column="1">123456</value>
+                <value column="2">190</value>
+            </row>
+            <row>
+                <value column="0">92345</value>
+                <value column="1">234567</value>
+                <value column="2">20</value>
+            </row>
+            <row>
+                <value column="0">92347</value>
+                <value column="1">567890</value>
+                <value column="2">50</value>
+            </row>
+            <row>
+                <value column="0">92347</value>
+                <value column="1">123456</value>
+                <value column="2">60</value>
+            </row>
+            <row>
+                <value column="0">92348</value>
+                <value column="1">789012</value>
+                <value column="2">70</value>
+            </row>
+            <row>
+                <value column="0">92348</value>
+                <value column="1">890123</value>
+                <value column="2">80</value>
+            </row>
+            <row>
+                <value column="0">92348</value>
+                <value column="1">923457</value>
+                <value column="2">10</value>
+            </row>
+            <row>
+                <value column="0">92348</value>
+                <value column="1">234568</value>
+                <value column="2">20</value>
+            </row>
+            <row>
+                <value column="0">92349</value>
+                <value column="1">901234</value>
+                <value column="2">90</value>
+            </row>
+            <row>
+                <value column="0">92349</value>
+                <value column="1">123457</value>
+                <value column="2">190</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>pedidos</name>
+        <ddl>CREATE TABLE pedidos(numero_pedido Integer PRIMARY KEY,numero_cliente Integer, fecha text)</ddl>
+        <columns>
+            <column>
+                <name>numero_pedido</name>
+                <type>Integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>numero_cliente</name>
+                <type>Integer</type>
+            </column>
+            <column>
+                <name>fecha</name>
+                <type>text</type>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">12345</value>
+                <value column="1">1234567890</value>
+                <value column="2">2024-01-22</value>
+            </row>
+            <row>
+                <value column="0">12346</value>
+                <value column="1">9876543210</value>
+                <value column="2">2024-01-23</value>
+            </row>
+            <row>
+                <value column="0">12347</value>
+                <value column="1">1234567891</value>
+                <value column="2">2024-01-24</value>
+            </row>
+            <row>
+                <value column="0">12348</value>
+                <value column="1">1234567892</value>
+                <value column="2">2024-01-25</value>
+            </row>
+            <row>
+                <value column="0">12349</value>
+                <value column="1">1234567893</value>
+                <value column="2">2024-01-26</value>
+            </row>
+            <row>
+                <value column="0">92345</value>
+                <value column="1">1234567890</value>
+                <value column="2">2024-01-22</value>
+            </row>
+            <row>
+                <value column="0">92347</value>
+                <value column="1">1234567891</value>
+                <value column="2">2024-01-24</value>
+            </row>
+            <row>
+                <value column="0">92348</value>
+                <value column="1">1234567892</value>
+                <value column="2">2024-01-25</value>
+            </row>
+            <row>
+                <value column="0">92349</value>
+                <value column="1">1234567893</value>
+                <value column="2">2024-01-26</value>
+            </row>
+        </rows>
+    </table>
+</database>
