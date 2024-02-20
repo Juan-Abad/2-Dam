@@ -20,15 +20,9 @@
     <fullyQualifiedTypeName name="org.xml.sax.XMLReader"/>
     <fullyQualifiedTypeName name="org.xml.sax.helpers.XMLReaderFactory"/>
     <fullyQualifiedTypeName name="java.util.TreeMap"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.LinkedHashSet"/>
-    <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
-    <fullyQualifiedTypeName name="org.neodatis.odb.ODB"/>
-    <fullyQualifiedTypeName name="org.neodatis.odb.ODBFactory"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.Objects"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.core.query.criteria.ICriterion"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.impl.core.query.criteria.CriteriaQuery"/>
@@ -42,6 +36,7 @@
     <fullyQualifiedTypeName name="java.lang.Thread"/>
     <fullyQualifiedTypeName name="Datos.AccesoDatos"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
 =======
@@ -49,4 +44,19 @@
     <fullyQualifiedTypeName name="java.util.Properties"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
 >>>>>>> 4d6107fdfaab0713184f839a95fb36165c1f18eb
+=======
+    <fullyQualifiedTypeName name="java.util.Properties"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="org.xml.sax.InputSource"/>
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
+    <fullyQualifiedTypeName name="practica_neodatis.Articulo"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="practica_neodatis.PedidoArticulo"/>
+    <fullyQualifiedTypeName name="practica_neodatis.Pedido"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.ODB"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.ODBFactory"/>
+>>>>>>> 4931c3566a50c31307743ea2093a65eb47a92bd7
 </qualifiedTypeNameHistroy>
