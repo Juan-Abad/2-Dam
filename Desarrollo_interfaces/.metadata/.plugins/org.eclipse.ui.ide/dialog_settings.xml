@@ -15,8 +15,8 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="C:\Users\Juan\Desktop\2 Dam\2-Dam\Desarrollo_interfaces"/>
 			<item value="C:\Users\usuario\Desktop\2ºDam\Desarrollo_interfaces"/>
+			<item value="C:\Users\Juan\Desktop\2 Dam\2-Dam\Desarrollo_interfaces"/>
 			<item value="C:\Users\Juan\Desktop\2 Dam\2-Dam\Desarrollo_interfaces\TresEnRaya"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
@@ -29,6 +29,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\usuario\Desktop\2ºDam\procesos\2EV\socketUDP_ejemplo"/>
 			<item value="C:\Users\Juan\Desktop\2 Dam\2-Dam\procesos\2EV\socketUDP_ejemplo"/>
 		</list>
 	</section>
