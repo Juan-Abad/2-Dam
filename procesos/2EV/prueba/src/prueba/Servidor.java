@@ -1,74 +1,51 @@
 package prueba;
 
-import java.io.* ;
+import java.io.*;
 
-
-import java.net.* ;
-
+import java.net.*;
 
 class Servidor {
 
+	static final int PUERTO = 5000;
 
-  static final int PUERTO=5000;
+	public Servidor() {
 
+		try {
 
-  public Servidor( ) {
+			ServerSocket skServidor = new ServerSocket(PUERTO);
 
+			System.out.println("Escucho el puerto " + PUERTO);
 
-    try {
+			for (int numCli = 0; numCli < 3; numCli++) {
 
+				Socket skCliente = skServidor.accept(); // Crea objeto
 
-      ServerSocket skServidor = new ServerSocket( PUERTO );
+				System.out.println("Sirvo al cliente " + numCli);
 
+				OutputStream aux = skCliente.getOutputStream();
 
-      System.out.println("Escucho el puerto " + PUERTO );
+				DataOutputStream flujo = new DataOutputStream(aux);
 
+				flujo.writeUTF("Hola cliente " + numCli);
 
-      for ( int numCli = 0; numCli < 3; numCli++) {
+				skCliente.close();
 
+			}
 
-        Socket skCliente = skServidor.accept(); // Crea objeto
+			System.out.println("Demasiados clientes por hoy");
 
+		} catch (Exception e) {
 
-        System.out.println("Sirvo al cliente " + numCli);
+			System.out.println(e.getMessage());
 
+		}
 
-        OutputStream aux = skCliente.getOutputStream();
+	}
 
+	public static void main(String[] arg) {
 
-        DataOutputStream flujo= new DataOutputStream( aux );
+		new Servidor();
 
-
-        flujo.writeUTF( "Hola cliente " + numCli );
-
-
-        skCliente.close();
-
-
-      } 
-
-
-      System.out.println("Demasiados clientes por hoy");
-
-
-    } catch( Exception e ) {
-
-
-      System.out.println( e.getMessage() );
-
-
-    }
-
-
-  }
-
-public static void main( String[] arg ) {
-
-
-    new Servidor();
-
-
-  }
-
+	}
 
 }

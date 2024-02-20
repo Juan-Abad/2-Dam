@@ -5,7 +5,11 @@
     <fullyQualifiedTypeName name="ad3_operaciones.FicheroAccesoAleatorio"/>
     <fullyQualifiedTypeName name="ad3_operaciones.VolcadoBinario"/>
     <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
+<<<<<<< HEAD
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+=======
     <fullyQualifiedTypeName name="java.io.IOException"/>
+>>>>>>> 4d6107fdfaab0713184f839a95fb36165c1f18eb
     <fullyQualifiedTypeName name="javax.swing.text.Document"/>
     <fullyQualifiedTypeName name="org.w3c.dom.Document"/>
     <fullyQualifiedTypeName name="org.w3c.dom.NodeList"/>
@@ -31,6 +35,16 @@
     <fullyQualifiedTypeName name="utilidades.Leer"/>
     <fullyQualifiedTypeName name="java.lang.Thread"/>
     <fullyQualifiedTypeName name="Datos.AccesoDatos"/>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+=======
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="java.util.Properties"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+>>>>>>> 4d6107fdfaab0713184f839a95fb36165c1f18eb
+=======
     <fullyQualifiedTypeName name="java.util.Properties"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="org.xml.sax.InputSource"/>
@@ -44,4 +58,5 @@
     <fullyQualifiedTypeName name="practica_neodatis.Pedido"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.ODB"/>
     <fullyQualifiedTypeName name="org.neodatis.odb.ODBFactory"/>
+>>>>>>> 4931c3566a50c31307743ea2093a65eb47a92bd7
 </qualifiedTypeNameHistroy>
