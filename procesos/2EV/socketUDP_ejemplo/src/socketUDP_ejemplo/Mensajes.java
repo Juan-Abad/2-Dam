@@ -14,6 +14,15 @@ public class Mensajes {
 		}
 	}
 
+	static class MensajeSimbolo_jugador {
+		String tipo = "Simbolo jugador";
+		Boolean isPlayerX;
+
+		public MensajeSimbolo_jugador(Boolean isPlayerX) {
+			this.isPlayerX = isPlayerX;
+		}
+	}
+
 	static class MensajeEspera {
 		String tipo = "Espera";
 		String descripcion = "Espera a tu turno";
@@ -23,7 +32,7 @@ public class Mensajes {
 		String tipo = "Juega";
 		String descripcion = "Turno de jugar";
 	}
-	
+
 	static class MensajeJugadaErronea {
 		String tipo = "Jugada erronea";
 	}

@@ -41,6 +41,17 @@ public class UDPservidor {
 						System.out.println("No se pudo registrar el cliente " + recibido.getAddress());
 					}
 					if (clientesConectados.size() == 2) {
+						Mensajes.MensajeSimbolo_jugador mensajeRespuesta;
+						DatagramPacket packet;
+						
+						for(Jugador j: clientesConectados) {
+							mensajeRespuesta = new Mensajes.MensajeSimbolo_jugador(true);
+							String mensajeRespuestaJson = gson.toJson(mensajeRespuesta);
+							byte buf[] = mensajeRespuestaJson.getBytes();
+							packet = new DatagramPacket(buf, buf.length, j.getAddress(),
+									j.getPort());
+							socket.send(packet);
+						}
 						empezarJuego(socket);
 					}
 					break;
