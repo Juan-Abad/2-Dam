@@ -15,7 +15,15 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.Semaphore;
+
+import socketUDP_ejemplo.Mensajes;
+import socketUDP_ejemplo.MessageSender;
 
 public class MiFrame extends JFrame {
 
@@ -31,20 +39,41 @@ public class MiFrame extends JFrame {
 	private int filaJugada;
 	private int columnaJugada;
 	private boolean pause = false;
+	private MessageSender sender;
+	private int idJugador;
 
 	/**
 	 * Create the frame.
 	 */
-	public MiFrame(Boolean isPlayerX, Semaphore semaphore) {
-		this.isPlayerX = isPlayerX;
+	public MiFrame(Semaphore semaphore, MessageSender sender, int idjugador) {
 		this.semaphore = semaphore;
+		this.sender = sender;
+		this.idJugador = idjugador;
+
+		addWindowListener((WindowListener) new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// Mostrar un mensaje de confirmación antes de cerrar
+				if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+					// Mostrar un mensaje de confirmación antes de cerrar
+					Mensajes.MensajeDesconectar mensajeDesconectar = new Mensajes.MensajeDesconectar(idjugador);
+					try {
+						sender.sendMessage(mensajeDesconectar, InetAddress.getByName(sender.getHostname()), MessageSender.getPort());
+					} catch (UnknownHostException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					dispose();
+					System.exit(0);
+
+				}
+			}
+		});
 		
-		if(this.isPlayerX) {
-			pause = false;
-		}else {
-			pause = true;
-		}
-		
+
 		setTitle("" + isPlayerX);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("imagenes\\tic-tac-toe-game-icon.jpg"));
 		setResizable(false);
@@ -166,7 +195,27 @@ public class MiFrame extends JFrame {
 			labels[((fila * 3) + columna)].setText("X");
 		}
 	}
-
+	
+	public void actualizarPartida(String[][] tablero) {
+		String simbolo = "";
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
+				switch(tablero[i][j]) {
+				case "-":
+					simbolo = "";
+					break;
+				case "X":
+					simbolo = "X";
+					break;
+				case "O":
+					simbolo = "O";
+					break;
+				}
+				labels[((i * 3) + j)].setText(simbolo);
+			}
+		}
+	}
+	
 	public void resetGame() {
 		for (JLabel label : labels) {
 			label.setText(""); // Reinicia todos los labels
@@ -201,4 +250,24 @@ public class MiFrame extends JFrame {
 	public void setColumnaJugada(int columnaJugada) {
 		this.columnaJugada = columnaJugada;
 	}
+
+	public boolean isPlayerX() {
+		return isPlayerX;
+	}
+
+	public void setPlayerX(boolean isPlayerX) {
+		this.isPlayerX = isPlayerX;
+		if (this.isPlayerX) {
+			pause = false;
+			setTitle("Jugador X");
+		} else {
+			pause = true;
+			setTitle("Jugador Y");
+		}
+	}
+
+	public int getIdJugador() {
+		return idJugador;
+	}
+	
 }

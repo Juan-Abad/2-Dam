@@ -13,7 +13,27 @@ public class Mensajes {
 			this.nombre = nombre;
 		}
 	}
-
+	
+	public static class MensajeDesconectar {
+		String tipo = "Desconexion jugador";
+		int idJugador;
+		
+		public MensajeDesconectar(int idJugador) {
+			this.idJugador = idJugador;
+		}
+	}
+	
+	static class MensajeJugadorConectado {
+		String tipo = "Conexion al servidor correcta";
+		int idJugador;
+		String[][] tablero;
+		
+		public MensajeJugadorConectado(int idJugador, String[][]tablero) {
+			this.idJugador = idJugador;
+			this.tablero = tablero;
+		}
+	}
+	
 	static class MensajeSimbolo_jugador {
 		String tipo = "Simbolo jugador";
 		Boolean isPlayerX;

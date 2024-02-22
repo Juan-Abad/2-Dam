@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Game {
 	private String[][] tablero = { { "-", "-", "-" }, { "-", "-", "-" }, { "-", "-", "-" } };
-
+	
 	public int comprobarGanador() {
 		int resultado = 0;
 		int lineaCompleta = 0;

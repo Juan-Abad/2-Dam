@@ -6,7 +6,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -69,15 +68,13 @@ public class UDPservidor {
 						DatagramPacket packet;
 						Boolean jugadorX = null;
 						int idJugador = -1;
-						boolean partidaActiva = false;
 
 						// Recorremos los clientes conectados
-						for (Jugador j: clientesConectados) {
+						for (int i = 0; i < 2; i++) {
 							// Si el jugador tiene asignado el símbolo X, guardamos su información
-							if (j.getIsPlayerX() != null && jugadorX == null) {
-								idJugador = j.getIdJugador();
-								jugadorX = j.getIsPlayerX();
-								partidaActiva = true;
+							if (clientesConectados.get(i).getIsPlayerX() != null && jugadorX == null) {
+								idJugador = clientesConectados.get(i).getIdJugador();
+								jugadorX = clientesConectados.get(i).getIsPlayerX();
 							}
 						}
 
@@ -91,10 +88,8 @@ public class UDPservidor {
 								byte buf[] = mensajeRespuestaJson.getBytes();
 								packet = new DatagramPacket(buf, buf.length, j.getAddress(), j.getPort());
 								socket.send(packet);
-								j.setIsPlayerX(jugadorX);
 								jugadorX = !jugadorX;
 							}
-							partidaActiva = false;
 						} else {
 
 							// Enviamos los mensajes solo al jugador activo (cuyo símbolo X es diferente de
@@ -112,15 +107,10 @@ public class UDPservidor {
 								}
 							}
 						}
-						if(!partidaActiva) {
-							juego = new Juego(socketJuego, game, clientesConectados);
-							Thread j = new Thread(juego);
-							j.start();
-						}else {
-							
-							Collections.reverse(clientesConectados);
-							juego.turnoJugar(idJugador);
-						}
+
+						juego = new Juego(socketJuego, game, clientesConectados);
+						Thread j = new Thread(juego);
+						j.start();
 					}
 					break;
 				case "cliente_ping_servidor":
@@ -140,7 +130,9 @@ public class UDPservidor {
 							clientesConectados.remove(j);
 						}
 					}
-					juego.setClientesConectados(clientesConectados);
+					boolean turnoJugador1 = juego.isTurnoJugador1();
+					juego = new Juego(socketJuego, game, clientesConectados);
+					juego.setTurnoJugador1(turnoJugador1);
 					break;
 				default:
 					// Aquí podrías manejar otros tipos de mensajes si es necesario
