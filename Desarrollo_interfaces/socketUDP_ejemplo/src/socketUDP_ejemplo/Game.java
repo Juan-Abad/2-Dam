@@ -3,7 +3,7 @@ package socketUDP_ejemplo;
 import java.util.Arrays;
 
 public class Game {
-	private String[][] tablero = { { "", "", "" }, { "", "", "" }, { "", "", "" } };
+	private String[][] tablero = { { "-", "-", "-" }, { "-", "-", "-" }, { "-", "-", "-" } };
 
 	public int comprobarGanador() {
 		int resultado = 0;
@@ -13,11 +13,12 @@ public class Game {
 		String[] diagonal2 = new String[5];
 		Arrays.fill(diagonal1, "");
 		Arrays.fill(diagonal2, "");
+		boolean empate = true;
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				if (getTablero()[i][j] != "") {
-					if (resultado == 0) {
+				if (getTablero()[i][j] != "-") {
+					if (resultado == 0) {//para que no de empate cuando aun se puede jugar
 						resultado = -1;
 					}
 					if (getTablero()[i][j].equals("X")) {
@@ -31,6 +32,7 @@ public class Game {
 					diagonal1[j + i] += symbol;
 					diagonal2[2 - j + i] += symbol;
 				} else {
+					empate = false;
 					diagonal1[j + i] += " ";
 					diagonal2[2 - j + i] += " ";
 				}
@@ -69,6 +71,9 @@ public class Game {
 				resultado = 2;
 			}
 		}
+		if(empate) {
+			return 0;
+		}
 		return resultado;
 	}
 
@@ -78,5 +83,5 @@ public class Game {
 
 	public void setTablero(String[][] tablero) {
 		this.tablero = tablero;
-	}	
+	}
 }

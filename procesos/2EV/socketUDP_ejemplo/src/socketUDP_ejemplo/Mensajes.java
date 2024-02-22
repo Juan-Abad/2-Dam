@@ -22,6 +22,17 @@ public class Mensajes {
 			this.isPlayerX = isPlayerX;
 		}
 	}
+	
+	static class MensajeJugadaOponente {
+		String tipo = "Jugada oponente";
+		int fila;
+		int columna;
+		
+		public MensajeJugadaOponente(int fila, int columna) {
+			this.fila = fila;
+			this.columna = columna;
+		}
+	}
 
 	static class MensajeEspera {
 		String tipo = "Espera";
@@ -84,6 +95,18 @@ public class Mensajes {
 		public MensajeDesconexion() {
 			this.tipo = "desconexion";
 		}
+	}
+	
+	static class MensajeGanador {
+		String tipo = "Ganador";
+	}
+	
+	static class MensajePerdedor {
+		String tipo = "Perdedor";
+	}
+	
+	static class MensajeEmpate {
+		String tipo = "Empate";
 	}
 
 	static class MensajeResultado {

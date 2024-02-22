@@ -33,7 +33,7 @@ class MessageSender implements Runnable {
 
 	public void run() {
 		try {
-			Mensajes.MensajeRegistro mensajeRegistro = new Mensajes.MensajeRegistro("Juan");
+			Mensajes.MensajeRegistro mensajeRegistro = new Mensajes.MensajeRegistro("Edu");
 			sendMessage(mensajeRegistro, InetAddress.getByName(hostname), PORT);
 			connected = true;
 			System.out.println("conectado");

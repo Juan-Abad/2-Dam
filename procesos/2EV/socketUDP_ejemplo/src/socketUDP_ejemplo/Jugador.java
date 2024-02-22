@@ -5,6 +5,7 @@ import java.net.InetAddress;
 public class Jugador {
 	private InetAddress address;
 	private int port;
+	private Boolean isPlayerX = null;
 	
 	public Jugador(InetAddress address, int port) {
 		this.address = address;
@@ -26,5 +27,12 @@ public class Jugador {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	
+
+	public Boolean isPlayerX() {
+		return isPlayerX;
+	}
+
+	public void setPlayerX(Boolean isPlayerX) {
+		this.isPlayerX = isPlayerX;
+	}
 }

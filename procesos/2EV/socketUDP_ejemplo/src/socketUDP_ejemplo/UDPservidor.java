@@ -17,7 +17,7 @@ public class UDPservidor {
 
 	public static void main(String[] args) throws Exception {
 		byte[] bufer = new byte[1024]; // Buffer para recibir el datagrama
-		DatagramSocket socket = new DatagramSocket(12345); // Asociar el DatagramSocket al puerto 12345
+		DatagramSocket socket = new DatagramSocket(49167); // Asociar el DatagramSocket al puerto 12345
 		while (true) {
 			// Esperar datagrama
 			System.out.println("Esperando Datagrama ........");
@@ -43,14 +43,14 @@ public class UDPservidor {
 					if (clientesConectados.size() == 2) {
 						Mensajes.MensajeSimbolo_jugador mensajeRespuesta;
 						DatagramPacket packet;
-						
-						for(Jugador j: clientesConectados) {
-							mensajeRespuesta = new Mensajes.MensajeSimbolo_jugador(true);
+						boolean jugadorX = true;
+						for (Jugador j : clientesConectados) {
+							mensajeRespuesta = new Mensajes.MensajeSimbolo_jugador(jugadorX);
 							String mensajeRespuestaJson = gson.toJson(mensajeRespuesta);
 							byte buf[] = mensajeRespuestaJson.getBytes();
-							packet = new DatagramPacket(buf, buf.length, j.getAddress(),
-									j.getPort());
+							packet = new DatagramPacket(buf, buf.length, j.getAddress(), j.getPort());
 							socket.send(packet);
+							jugadorX = !jugadorX;
 						}
 						empezarJuego(socket);
 					}
@@ -88,6 +88,24 @@ public class UDPservidor {
 			} else {
 				jugador_n = 1;
 			}
+			try {
+				Mensajes.MensajeEspera mensajeEspera = new Mensajes.MensajeEspera();
+				String mensajeEsperaJSon = gson.toJson(mensajeEspera);
+				byte buf2[] = mensajeEsperaJSon.getBytes();
+				DatagramPacket packet2;
+
+				if (turnoJugador1) {
+					packet2 = new DatagramPacket(buf2, buf2.length, clientesConectados.get(1).getAddress(),
+							clientesConectados.get(1).getPort());
+				} else {
+					packet2 = new DatagramPacket(buf2, buf2.length, clientesConectados.get(0).getAddress(),
+							clientesConectados.get(0).getPort());
+				}
+				socket.send(packet2);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 			Mensajes.MensajeJuega mensajeJuega = new Mensajes.MensajeJuega();
 			String mensajeRespuestaJson = gson.toJson(mensajeJuega);
 			byte buf[] = mensajeRespuestaJson.getBytes();
@@ -100,7 +118,7 @@ public class UDPservidor {
 					jugadaErronea = false;
 					Mensajes.MensajeJugadaErronea mensajeJugadaErronea = new Mensajes.MensajeJugadaErronea();
 					String mensajeResJugadaErronea = gson.toJson(mensajeJugadaErronea);
-				    buf = mensajeResJugadaErronea.getBytes();
+					buf = mensajeResJugadaErronea.getBytes();
 					packet = new DatagramPacket(buf, buf.length, clientesConectados.get(jugador_n).getAddress(),
 							clientesConectados.get(jugador_n).getPort());
 					socket.send(packet);
@@ -126,6 +144,19 @@ public class UDPservidor {
 
 				// Realizar la jugada
 				game.getTablero()[fila][columna] = turnoJugador1 ? "X" : "O";
+
+				Mensajes.MensajeJugadaOponente mensajeJugadaOponente = new Mensajes.MensajeJugadaOponente(fila,
+						columna);
+				String mensajeResJugadaoponente = gson.toJson(mensajeJugadaOponente);
+				buf = mensajeResJugadaoponente.getBytes();
+				if (turnoJugador1) {
+					packet = new DatagramPacket(buf, buf.length, clientesConectados.get(1).getAddress(),
+							clientesConectados.get(1).getPort());
+				} else {
+					packet = new DatagramPacket(buf, buf.length, clientesConectados.get(0).getAddress(),
+							clientesConectados.get(0).getPort());
+				}
+				socket.send(packet);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -134,34 +165,73 @@ public class UDPservidor {
 			// Verificar si hay un ganador
 			int resultado = game.comprobarGanador();
 			if (resultado == 1 || resultado == 2) {
+				Mensajes.MensajeGanador mensajeGanador = new Mensajes.MensajeGanador();
+				String mensajeGanadorJson = gson.toJson(mensajeGanador);
+				byte bufGanador[] = mensajeGanadorJson.getBytes();
+				
+				Mensajes.MensajePerdedor mensajePerdedor = new Mensajes.MensajePerdedor();
+				String mensajePerdedorJson = gson.toJson(mensajePerdedor);
+				byte bufPerdedor[] = mensajePerdedorJson.getBytes();
+				
+				DatagramPacket packetGanador;
+				DatagramPacket packetPerdedor;
+				
+				int jugadorGanador = -1, jugadorPerdedor = -1;
 				// enviar info a client ganador
-				if(resultado == 1) {
+				if (resultado == 1) {
 					System.out.println("Gana X");
-					for(int i=0; i<game.getTablero().length; i++) {
-						for(int j=0; j<game.getTablero()[0].length; j++) {
-							System.out.print(" "+game.getTablero()[i][j]);
+					for (int i = 0; i < game.getTablero().length; i++) {
+						for (int j = 0; j < game.getTablero()[0].length; j++) {
+							System.out.print(" " + game.getTablero()[i][j]);
 						}
 						System.out.println();
 					}
-					
-				}else {
-					for(int i=0; i<game.getTablero().length; i++) {
-						for(int j=0; j<game.getTablero()[0].length; j++) {
-							System.out.print(" "+game.getTablero()[i][j]);
+					jugadorGanador = 0;
+					jugadorPerdedor = 1;
+				} else {
+					for (int i = 0; i < game.getTablero().length; i++) {
+						for (int j = 0; j < game.getTablero()[0].length; j++) {
+							System.out.print(" " + game.getTablero()[i][j]);
 						}
 						System.out.println();
 					}
 					System.out.println("Gana Y");
+					jugadorGanador = 1;
+					jugadorPerdedor = 0;
+				}
+				packetGanador = new DatagramPacket(bufGanador, bufGanador.length, clientesConectados.get(jugadorGanador).getAddress(),
+						clientesConectados.get(jugadorGanador).getPort());
+				
+				packetPerdedor = new DatagramPacket(bufPerdedor, bufPerdedor.length, clientesConectados.get(jugadorPerdedor).getAddress(),
+						clientesConectados.get(jugadorPerdedor).getPort());
+				try {
+					socket.send(packetPerdedor);
+					socket.send(packetGanador);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 				break;
 			} else if (resultado == 0) {
+				Mensajes.MensajeEmpate mensajeEmpate = new Mensajes.MensajeEmpate();
+				String mensajeEmpateJson = gson.toJson(mensajeEmpate);
+				byte bufEmpate[] = mensajeEmpateJson.getBytes();
+				
+				DatagramPacket packetEmpate;
 				// empate
 				System.out.println("Empate");
-				for(int i=0; i<game.getTablero().length; i++) {
-					for(int j=0; j<game.getTablero()[0].length; j++) {
-						System.out.print(" "+game.getTablero()[i][j]);
+				for (int i = 0; i < game.getTablero().length; i++) {
+					for (int j = 0; j < game.getTablero()[0].length; j++) {
+						System.out.print(" " + game.getTablero()[i][j]);
 					}
 					System.out.println();
+				}
+				for (Jugador j : clientesConectados) {
+					packetEmpate = new DatagramPacket(bufEmpate, bufEmpate.length, j.getAddress(), j.getPort());
+					try {
+						socket.send(packetEmpate);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 				break;
 			}

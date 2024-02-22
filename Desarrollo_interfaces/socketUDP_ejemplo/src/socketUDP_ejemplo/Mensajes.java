@@ -14,6 +14,26 @@ public class Mensajes {
 		}
 	}
 
+	static class MensajeSimbolo_jugador {
+		String tipo = "Simbolo jugador";
+		Boolean isPlayerX;
+
+		public MensajeSimbolo_jugador(Boolean isPlayerX) {
+			this.isPlayerX = isPlayerX;
+		}
+	}
+	
+	static class MensajeJugadaOponente {
+		String tipo = "Jugada oponente";
+		int fila;
+		int columna;
+		
+		public MensajeJugadaOponente(int fila, int columna) {
+			this.fila = fila;
+			this.columna = columna;
+		}
+	}
+
 	static class MensajeEspera {
 		String tipo = "Espera";
 		String descripcion = "Espera a tu turno";
@@ -23,7 +43,7 @@ public class Mensajes {
 		String tipo = "Juega";
 		String descripcion = "Turno de jugar";
 	}
-	
+
 	static class MensajeJugadaErronea {
 		String tipo = "Jugada erronea";
 	}
@@ -75,6 +95,18 @@ public class Mensajes {
 		public MensajeDesconexion() {
 			this.tipo = "desconexion";
 		}
+	}
+	
+	static class MensajeGanador {
+		String tipo = "Ganador";
+	}
+	
+	static class MensajePerdedor {
+		String tipo = "Perdedor";
+	}
+	
+	static class MensajeEmpate {
+		String tipo = "Empate";
 	}
 
 	static class MensajeResultado {
