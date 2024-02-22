@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Game {
 	private String[][] tablero = { { "-", "-", "-" }, { "-", "-", "-" }, { "-", "-", "-" } };
-	
+
 	public int comprobarGanador() {
 		int resultado = 0;
 		int lineaCompleta = 0;
@@ -18,7 +18,7 @@ public class Game {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				if (getTablero()[i][j] != "-") {
-					if (resultado == 0) {//para que no de empate cuando aun se puede jugar
+					if (resultado == 0) {// para que no de empate cuando aun se puede jugar
 						resultado = -1;
 					}
 					if (getTablero()[i][j].equals("X")) {
@@ -71,7 +71,7 @@ public class Game {
 				resultado = 2;
 			}
 		}
-		if(empate) {
+		if (empate) {
 			return 0;
 		}
 		return resultado;

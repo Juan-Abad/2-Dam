@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import socketUDP_ejemplo.Mensajes;
+import socketUDP_ejemplo.MessageSender;
 import socketUDP_ejemplo.UDPcliente;
 
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.UnknownHostException;
 
 public class Dialog_playAgain extends JDialog {
 
@@ -43,7 +46,7 @@ public class Dialog_playAgain extends JDialog {
 		lblNewLabel.setBounds(10, 11, 414, 67);
 		contentPanel.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("¿Quiere volver a jugar?");
+		JLabel lblNewLabel_1 = new JLabel("¿Quiere seguir viendo la interfaz?");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 114, 414, 42);
@@ -72,6 +75,16 @@ public class Dialog_playAgain extends JDialog {
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						Mensajes.MensajeDesconectar mensajeDesconectar = new Mensajes.MensajeDesconectar(((MiFrame) framePrincipal).getIdJugador());
+						try {
+							((MiFrame) framePrincipal).getSender().sendMessage(mensajeDesconectar, ((MiFrame) framePrincipal).getSender().getHostAddress(), MessageSender.getPort());
+						} catch (UnknownHostException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						dispose();
 						framePrincipal.dispose();
 						System.exit(0);

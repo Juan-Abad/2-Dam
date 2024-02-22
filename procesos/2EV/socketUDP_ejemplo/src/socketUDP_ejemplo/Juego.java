@@ -14,7 +14,7 @@ public class Juego implements Runnable {
 	private List<Jugador> clientesConectados;
 	private Game game;
 	private boolean turnoJugador1 = true;
-	private int jugador_n=0;
+	private int jugador_n = 0;
 
 	Juego(DatagramSocket socket, Game game, List<Jugador> clientesConectados) {
 		this.socket = socket;
@@ -71,9 +71,7 @@ public class Juego implements Runnable {
 					socket.send(packet);
 				}
 				do {
-					System.out.println("--");
 					socket.receive(recibido);
-					System.out.println("..");
 				} while (recibido.getAddress() != clientesConectados.get(jugador_n).getAddress()
 						&& !gson.fromJson(new String(recibido.getData(), 0, recibido.getLength()), JsonObject.class)
 								.get("tipo").getAsString().equals("Jugada")
@@ -192,7 +190,7 @@ public class Juego implements Runnable {
 		}
 
 	}
-	
+
 	public void turnoJugar(int idJugador) {
 		Gson gson = new Gson();
 		Mensajes.MensajeJuega mensajeJuega = new Mensajes.MensajeJuega();
@@ -201,10 +199,9 @@ public class Juego implements Runnable {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, clientesConectados.get(jugador_n).getAddress(),
 				clientesConectados.get(jugador_n).getPort());
 
-		for(Jugador j: clientesConectados) {
-			if(idJugador != j.getIdJugador())
-			packet = new DatagramPacket(buf, buf.length, j.getAddress(),
-					j.getPort());
+		for (Jugador j : clientesConectados) {
+			if (idJugador != j.getIdJugador())
+				packet = new DatagramPacket(buf, buf.length, j.getAddress(), j.getPort());
 		}
 		try {
 			socket.send(packet);
@@ -252,5 +249,5 @@ public class Juego implements Runnable {
 
 	public void setJugador_n(int jugador_n) {
 		this.jugador_n = jugador_n;
-	}	
+	}
 }

@@ -32,7 +32,6 @@ public class MiFrame extends JFrame {
 
 	private JLabel[] labels = new JLabel[9]; // Utilizamos un array para almacenar los JLabels
 
-	private static Integer sizeGame = 3;
 	private boolean isPlayerX = true; // Variable para determinar el jugador actual
 
 	private Semaphore semaphore;
@@ -41,6 +40,8 @@ public class MiFrame extends JFrame {
 	private boolean pause = false;
 	private MessageSender sender;
 	private int idJugador;
+
+	private JLabel label_mensaje_turno;
 
 	/**
 	 * Create the frame.
@@ -58,7 +59,7 @@ public class MiFrame extends JFrame {
 					// Mostrar un mensaje de confirmación antes de cerrar
 					Mensajes.MensajeDesconectar mensajeDesconectar = new Mensajes.MensajeDesconectar(idjugador);
 					try {
-						sender.sendMessage(mensajeDesconectar, InetAddress.getByName(sender.getHostname()), MessageSender.getPort());
+						sender.sendMessage(mensajeDesconectar, sender.getHostAddress(), MessageSender.getPort());
 					} catch (UnknownHostException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -72,9 +73,8 @@ public class MiFrame extends JFrame {
 				}
 			}
 		});
-		
 
-		setTitle("" + isPlayerX);
+		setTitle("Esperando al otro jugador");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("imagenes\\tic-tac-toe-game-icon.jpg"));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,20 +84,6 @@ public class MiFrame extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(0, 0, 139, 22);
-		comboBox.addItem("Reiniciar"); // Agrega el ítem "Reiniciar"
-
-		comboBox.setSelectedIndex(-1);
-
-		comboBox.addActionListener(e -> {
-			String selectedItem = (String) comboBox.getSelectedItem();
-			if (selectedItem != null && selectedItem.equals("Reiniciar")) {
-				resetGame(); // Llama al método resetGame() cuando se selecciona "Reiniciar"
-			}
-		});
-		contentPane.add(comboBox);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 33, 606, 357);
@@ -149,6 +135,10 @@ public class MiFrame extends JFrame {
 		separator_2_1.setBackground(Color.BLACK);
 		separator_2_1.setBounds(0, 242, 605, 5);
 		panel.add(separator_2_1);
+
+		label_mensaje_turno = new JLabel("New label");
+		label_mensaje_turno.setBounds(172, 4, 326, 22);
+		contentPane.add(label_mensaje_turno);
 	}
 
 	MouseAdapter adapter = new MouseAdapter() {
@@ -195,12 +185,12 @@ public class MiFrame extends JFrame {
 			labels[((fila * 3) + columna)].setText("X");
 		}
 	}
-	
+
 	public void actualizarPartida(String[][] tablero) {
 		String simbolo = "";
-		for(int i=0; i<3; i++) {
-			for(int j=0; j<3; j++) {
-				switch(tablero[i][j]) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				switch (tablero[i][j]) {
 				case "-":
 					simbolo = "";
 					break;
@@ -215,7 +205,7 @@ public class MiFrame extends JFrame {
 			}
 		}
 	}
-	
+
 	public void resetGame() {
 		for (JLabel label : labels) {
 			label.setText(""); // Reinicia todos los labels
@@ -269,5 +259,17 @@ public class MiFrame extends JFrame {
 	public int getIdJugador() {
 		return idJugador;
 	}
-	
+
+	public JLabel getLabel_mensaje_turno() {
+		return label_mensaje_turno;
+	}
+
+	public void setLabel_mensaje_turno(String cadena_mensaje) {
+		this.label_mensaje_turno.setText(cadena_mensaje);
+	}
+
+	public MessageSender getSender() {
+		return sender;
+	}
+
 }

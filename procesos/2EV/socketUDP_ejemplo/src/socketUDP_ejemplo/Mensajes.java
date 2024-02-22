@@ -13,27 +13,27 @@ public class Mensajes {
 			this.nombre = nombre;
 		}
 	}
-	
+
 	public static class MensajeDesconectar {
 		String tipo = "Desconexion jugador";
 		int idJugador;
-		
+
 		public MensajeDesconectar(int idJugador) {
 			this.idJugador = idJugador;
 		}
 	}
-	
+
 	static class MensajeJugadorConectado {
 		String tipo = "Conexion al servidor correcta";
 		int idJugador;
 		String[][] tablero;
-		
-		public MensajeJugadorConectado(int idJugador, String[][]tablero) {
+
+		public MensajeJugadorConectado(int idJugador, String[][] tablero) {
 			this.idJugador = idJugador;
 			this.tablero = tablero;
 		}
 	}
-	
+
 	static class MensajeSimbolo_jugador {
 		String tipo = "Simbolo jugador";
 		Boolean isPlayerX;
@@ -42,12 +42,12 @@ public class Mensajes {
 			this.isPlayerX = isPlayerX;
 		}
 	}
-	
+
 	static class MensajeJugadaOponente {
 		String tipo = "Jugada oponente";
 		int fila;
 		int columna;
-		
+
 		public MensajeJugadaOponente(int fila, int columna) {
 			this.fila = fila;
 			this.columna = columna;
@@ -116,15 +116,15 @@ public class Mensajes {
 			this.tipo = "desconexion";
 		}
 	}
-	
+
 	static class MensajeGanador {
 		String tipo = "Ganador";
 	}
-	
+
 	static class MensajePerdedor {
 		String tipo = "Perdedor";
 	}
-	
+
 	static class MensajeEmpate {
 		String tipo = "Empate";
 	}

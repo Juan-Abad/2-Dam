@@ -8,7 +8,7 @@ public class Jugador {
 	private Boolean isPlayerX = null;
 	private Integer idJugador;
 	private static Integer idSiguiente = 1;
-	
+
 	public Jugador(InetAddress address, int port) {
 		this.address = address;
 		this.port = port;

@@ -7,18 +7,16 @@ import java.net.InetAddress;
 import com.google.gson.Gson;
 
 public class MessageSender implements Runnable {
-	public final static int PORT = 49167;
+	public final static int PORT = 12345;
 	private DatagramSocket sock;
-	private String hostname;
+	private InetAddress hostAddress;
 	private volatile boolean connected = false;
 	private Gson gson;
-	private byte buf[];
 
-	MessageSender(DatagramSocket s, String h) {
+	MessageSender(DatagramSocket s, InetAddress h) {
 		sock = s;
-		hostname = h;
+		hostAddress = h;
 		gson = new Gson();
-		this.buf = new byte[1024];
 	}
 
 	public void sendMessage(Object mensaje, InetAddress address, int port) throws Exception {
@@ -32,7 +30,7 @@ public class MessageSender implements Runnable {
 		try {
 			do {
 				Mensajes.MensajeRegistro mensajeRegistro = new Mensajes.MensajeRegistro("Juan");
-				sendMessage(mensajeRegistro, InetAddress.getByName(hostname), PORT);
+				sendMessage(mensajeRegistro, hostAddress, PORT);
 				Thread.sleep(1000);
 			} while (!connected);
 			System.out.println("conectado");
@@ -65,8 +63,12 @@ public class MessageSender implements Runnable {
 		return sock;
 	}
 
-	public String getHostname() {
-		return hostname;
+	public InetAddress getHostAddress() {
+		return hostAddress;
 	}
-	
+
+	public void setHostAddress(InetAddress hostAddress) {
+		this.hostAddress = hostAddress;
+	}
+
 }

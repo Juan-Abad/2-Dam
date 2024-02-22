@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class UDPservidor {
-	// Lista para almacenar las direcciones IP de los clientes conectados
+	// Lista para almacenar los Jugadores
 	private static List<Jugador> clientesConectados = new ArrayList<>();
 	private static Game game = new Game();
 	private static Juego juego;
@@ -21,9 +21,9 @@ public class UDPservidor {
 
 	public static void main(String[] args) throws Exception {
 		byte[] bufer = new byte[1024]; // Buffer para recibir el datagrama
-		DatagramSocket socket = new DatagramSocket(49167, InetAddress.getLocalHost()); // Asociar el DatagramSocket al
+		DatagramSocket socket = new DatagramSocket(12345, InetAddress.getLocalHost()); // Asociar el DatagramSocket al
 																						// puerto 12345
-		socketJuego = new DatagramSocket(49000, InetAddress.getLocalHost());
+		socketJuego = new DatagramSocket(12346, InetAddress.getLocalHost());
 		// socket.bind(new
 		// InetSocketAddress(InetAddress.getByName("192.168.1.119"),5005));
 		while (true) {
@@ -72,7 +72,7 @@ public class UDPservidor {
 						boolean partidaActiva = false;
 
 						// Recorremos los clientes conectados
-						for (Jugador j: clientesConectados) {
+						for (Jugador j : clientesConectados) {
 							// Si el jugador tiene asignado el símbolo X, guardamos su información
 							if (j.getIsPlayerX() != null && jugadorX == null) {
 								idJugador = j.getIdJugador();
@@ -99,25 +99,23 @@ public class UDPservidor {
 
 							// Enviamos los mensajes solo al jugador activo (cuyo símbolo X es diferente de
 							// null)
-							for (Jugador j: clientesConectados) {
+							for (Jugador j : clientesConectados) {
 								// Si es el mismo jugador al que se le asignó el símbolo X, enviamos el mensaje
 								if (j.getIdJugador() != idJugador) {
 									mensajeRespuesta = new Mensajes.MensajeSimbolo_jugador(!jugadorX);
 									String mensajeRespuestaJson = gson.toJson(mensajeRespuesta);
 									byte buf[] = mensajeRespuestaJson.getBytes();
-									packet = new DatagramPacket(buf, buf.length,
-											j.getAddress(),
-											j.getPort());
+									packet = new DatagramPacket(buf, buf.length, j.getAddress(), j.getPort());
 									socket.send(packet);
 								}
 							}
 						}
-						if(!partidaActiva) {
+						if (!partidaActiva) {
 							juego = new Juego(socketJuego, game, clientesConectados);
 							Thread j = new Thread(juego);
 							j.start();
-						}else {
-							
+						} else {
+
 							Collections.reverse(clientesConectados);
 							juego.turnoJugar(idJugador);
 						}
@@ -139,6 +137,9 @@ public class UDPservidor {
 						if (j.getIdJugador() == idJugador) {
 							clientesConectados.remove(j);
 						}
+					}
+					if (clientesConectados.size() == 0) {
+						System.exit(0);
 					}
 					juego.setClientesConectados(clientesConectados);
 					break;

@@ -1,10 +1,12 @@
 package socketUDP_ejemplo;
 
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 public class UDPcliente {
 	public static void main(String args[]) throws Exception {
-		String host = "192.168.1.119";
+		//InetAddress host = InetAddress.getByName("localhost");
+		InetAddress host = InetAddress.getLocalHost();
 
 		DatagramSocket socket = new DatagramSocket();
 		DatagramSocket socketJuego = new DatagramSocket();

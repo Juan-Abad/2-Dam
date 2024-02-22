@@ -20,7 +20,6 @@ public class MessageReceiver implements Runnable {
 	private MiFrame frame;
 	private Semaphore semaphore; // Semáforo para esperar el clic del usuario
 	private Integer idJugador;
-	private boolean partidaEmpezada = false;
 	private DatagramSocket socketJuego;
 
 	MessageReceiver(DatagramSocket s, MessageSender sender, DatagramSocket socketJuego) {
@@ -46,12 +45,13 @@ public class MessageReceiver implements Runnable {
 					frame = new MiFrame(semaphore, sender, this.idJugador);
 					MensajeJugadorConectado mensaje = gson.fromJson(received, MensajeJugadorConectado.class);
 					frame.actualizarPartida(mensaje.tablero);
-
+					frame.setVisible(true);
+					frame.pauseJuego();
 					sender.setConnected(true);
 					break;
 				case "Simbolo jugador":
 					frame.setPlayerX(gson.fromJson(received, JsonObject.class).get("isPlayerX").getAsBoolean());
-					frame.setVisible(true);
+					frame.unpauseJuego();
 					break;
 				case "comprobar_conexion":
 					Mensajes.MensajeComprobarConexion_ping mensajeRespuesta = new Mensajes.MensajeComprobarConexion_ping();
@@ -59,6 +59,7 @@ public class MessageReceiver implements Runnable {
 					sendMessage(mensajeRespuestaJson, packet.getAddress(), packet.getPort());
 					break;
 				case "Juega":
+					frame.setLabel_mensaje_turno("Es tu turno de juego");
 					frame.unpauseJuego();
 					// Esperar la señal del clic del usuario
 					semaphore.acquire();
@@ -87,6 +88,7 @@ public class MessageReceiver implements Runnable {
 							gson.fromJson(received, JsonObject.class).get("columna").getAsInt());
 					break;
 				case "Espera":
+					frame.setLabel_mensaje_turno("Esperando al rival...");
 					frame.pauseJuego();
 					break;
 				case "Ganador":
