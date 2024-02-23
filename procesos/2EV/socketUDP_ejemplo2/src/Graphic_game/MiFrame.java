@@ -136,7 +136,7 @@ public class MiFrame extends JFrame {
 		separator_2_1.setBounds(0, 242, 605, 5);
 		panel.add(separator_2_1);
 
-		label_mensaje_turno = new JLabel("New label");
+		label_mensaje_turno = new JLabel("");
 		label_mensaje_turno.setBounds(172, 4, 326, 22);
 		contentPane.add(label_mensaje_turno);
 	}
@@ -210,7 +210,7 @@ public class MiFrame extends JFrame {
 		for (JLabel label : labels) {
 			label.setText(""); // Reinicia todos los labels
 		}
-		isPlayerX = true; // Vuelve a establecer el primer jugador como X
+		sender.sendMessage(label_mensaje_turno, null, columnaJugada);
 	}
 
 	public void pauseJuego() {

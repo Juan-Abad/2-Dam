@@ -150,4 +150,8 @@ public class Mensajes {
 			this.tablero = tablero;
 		}
 	}
+	
+	public static class MensajeReiniciar {
+		
+	}
 }

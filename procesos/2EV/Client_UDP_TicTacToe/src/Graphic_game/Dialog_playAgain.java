@@ -1,6 +1,7 @@
 package Graphic_game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -25,6 +26,9 @@ public class Dialog_playAgain extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblNewLabel;
+	private JButton okButton;
+	private JButton cancelButton;
+	private boolean activadoOkButton = false;
 
 	/**
 	 * Create the dialog.
@@ -40,13 +44,13 @@ public class Dialog_playAgain extends JDialog {
 		int y = framePrincipal.getY() + (framePrincipal.getHeight() - getHeight()) / 2;
 		setLocation(x, y);
 
-		lblNewLabel = new JLabel("New label");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 11, 414, 67);
 		contentPanel.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("¿Quiere seguir viendo la interfaz?");
+		JLabel lblNewLabel_1 = new JLabel("¿Quiere volver a jugar?");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 114, 414, 42);
@@ -57,12 +61,34 @@ public class Dialog_playAgain extends JDialog {
 			contentPanel.add(buttonPane);
 			buttonPane.setLayout(null);
 			{
-				JButton okButton = new JButton("SI");
+				okButton = new JButton("SI");
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						((MiFrame) framePrincipal).resetGame();
-						dispose();
+						activadoOkButton = !activadoOkButton;
+						if (activadoOkButton) {
+							okButton.setBackground(Color.green);
+							((MiFrame) framePrincipal).resetGame();
+							Mensajes.MensajeReiniciarVotacion mensajeReiniciarVotacion = new Mensajes.MensajeReiniciarVotacion();
+							try {
+								((MiFrame) framePrincipal).getSender().sendMessage(mensajeReiniciarVotacion,
+										((MiFrame) framePrincipal).getSender().getHostAddress(),
+										MessageSender.getPort());
+							} catch (Exception i) {
+								i.printStackTrace();
+							}
+						} else {
+							okButton.setBackground(new Color(240, 240, 240));
+							Mensajes.MensajeCancelarReinicio mensajeCancelarReinicio = new Mensajes.MensajeCancelarReinicio();
+							try {
+								((MiFrame) framePrincipal).getSender().sendMessage(mensajeCancelarReinicio,
+										((MiFrame) framePrincipal).getSender().getHostAddress(),
+										MessageSender.getPort());
+							} catch (Exception i) {
+								i.printStackTrace();
+							}
+						}
+
 					}
 				});
 				okButton.setBounds(148, 5, 57, 23);
@@ -71,13 +97,15 @@ public class Dialog_playAgain extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("NO");
+				cancelButton = new JButton("NO");
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						Mensajes.MensajeDesconectar mensajeDesconectar = new Mensajes.MensajeDesconectar(((MiFrame) framePrincipal).getIdJugador());
+						Mensajes.MensajeDesconectar mensajeDesconectar = new Mensajes.MensajeDesconectar(
+								((MiFrame) framePrincipal).getIdJugador());
 						try {
-							((MiFrame) framePrincipal).getSender().sendMessage(mensajeDesconectar, ((MiFrame) framePrincipal).getSender().getHostAddress(), MessageSender.getPort());
+							((MiFrame) framePrincipal).getSender().sendMessage(mensajeDesconectar,
+									((MiFrame) framePrincipal).getSender().getHostAddress(), MessageSender.getPort());
 						} catch (UnknownHostException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -99,5 +127,13 @@ public class Dialog_playAgain extends JDialog {
 
 	public JLabel getLblNewLabel() {
 		return lblNewLabel;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public JButton getCancelButton() {
+		return cancelButton;
 	}
 }

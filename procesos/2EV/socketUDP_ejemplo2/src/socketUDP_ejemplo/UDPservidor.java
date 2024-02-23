@@ -1,10 +1,8 @@
 package socketUDP_ejemplo;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,8 +22,7 @@ public class UDPservidor {
 		DatagramSocket socket = new DatagramSocket(12345, InetAddress.getLocalHost()); // Asociar el DatagramSocket al
 																						// puerto 12345
 		socketJuego = new DatagramSocket(12346, InetAddress.getLocalHost());
-		// socket.bind(new
-		// InetSocketAddress(InetAddress.getByName("192.168.1.119"),5005));
+		
 		while (true) {
 			// Esperar datagrama
 			System.out.println("Esperando Datagrama ........");
@@ -133,11 +130,13 @@ public class UDPservidor {
 					break;
 				case "Desconexion jugador":
 					Integer idJugador = gson.fromJson(paquete, JsonObject.class).get("idJugador").getAsInt();
+					Jugador jugador_a_eliminar = null;
 					for (Jugador j : clientesConectados) {
 						if (j.getIdJugador() == idJugador) {
-							clientesConectados.remove(j);
+							jugador_a_eliminar = j;
 						}
 					}
+					clientesConectados.remove(jugador_a_eliminar);
 					if (clientesConectados.size() == 0) {
 						System.exit(0);
 					}
