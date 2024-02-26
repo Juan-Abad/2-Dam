@@ -18,6 +18,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import Informes.Informes;
+
 public class Main {
 	
 	private static ODB odb;
@@ -42,6 +44,15 @@ public class Main {
         }
         odb = ODBFactory.open(ruta);
         //insertarBBDD();
+        Informes informes = new Informes(odb);
+        //informes.Num_pedidos_procesados();
+        //informes.Num_lineas_pedido_procesadas();
+        //informes.List_articulos_unicos();
+        //informes.List_clientes_con_pedidos();
+        //informes.List_cantidad_pedida_de_cada_articulo();
+        //informes.List_unidades_pedidas_por_pedido();
+        //informes.Media_articulos_por_pedido();
+        informes.Listado_pedidos();
         odb.close();
     }
 

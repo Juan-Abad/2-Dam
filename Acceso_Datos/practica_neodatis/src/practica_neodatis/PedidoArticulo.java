@@ -11,6 +11,10 @@ public class PedidoArticulo {
 		this.cantidad = cantidad;
 	}
 
+	public PedidoArticulo(Long numero_pedido) {
+		this.numero_pedido = numero_pedido;
+	}
+
 	public Long getNumero_pedido() {
 		return numero_pedido;
 	}
