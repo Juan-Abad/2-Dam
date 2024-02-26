@@ -115,9 +115,40 @@ public class UDPservidor {
 							j = new Thread(juego);
 							j.start();
 						} else {
+							System.out.println(jugadorX);
+							if (!jugadorX) {
+								Collections.reverse(clientesConectados);
+								for (Jugador j : clientesConectados) {
+									if (juego.getJugador_n() == 1) {
+										juego.turnoJugar(j.getIdJugador());
+									} else {
+										Mensajes.MensajeEspera mensajeEspera = new Mensajes.MensajeEspera();
+										String mensajeEsperaJSon = gson.toJson(mensajeEspera);
+										byte buf2[] = mensajeEsperaJSon.getBytes();
+										DatagramPacket packet2;
 
-							Collections.reverse(clientesConectados);
-							juego.turnoJugar(idJugador);
+										packet2 = new DatagramPacket(buf2, buf2.length, j.getAddress(), j.getPort());
+										socket.send(packet2);
+									}
+								}
+							} else {
+								if (juego.getJugador_n() == 0) {
+									juego.turnoJugar(idJugador);
+								} else {
+									for (Jugador j : clientesConectados) {
+										if (idJugador != j.getIdJugador()) {
+											Mensajes.MensajeEspera mensajeEspera = new Mensajes.MensajeEspera();
+											String mensajeEsperaJSon = gson.toJson(mensajeEspera);
+											byte buf2[] = mensajeEsperaJSon.getBytes();
+											DatagramPacket packet2;
+
+											packet2 = new DatagramPacket(buf2, buf2.length, j.getAddress(),
+													j.getPort());
+											socket.send(packet2);
+										}
+									}
+								}
+							}
 						}
 					}
 					break;
