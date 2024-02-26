@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.neodatis.odb.Objects"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.core.query.nq.SimpleNativeQuery"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.core.query.nq.NativeQuery"/>
+    <fullyQualifiedTypeName name="practica_neodatis.PedidoArticulo"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="Informes.Informes"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.impl.core.query.criteria.CriteriaQuery"/>
+    <fullyQualifiedTypeName name="java.math.BigInteger"/>
+    <fullyQualifiedTypeName name="practica_neodatis.Pedido"/>
+</qualifiedTypeNameHistroy>
