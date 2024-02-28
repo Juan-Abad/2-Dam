@@ -69,7 +69,6 @@ public class MiFrame extends JFrame {
 					}
 					dispose();
 					System.exit(0);
-
 				}
 			}
 		});
