@@ -10,4 +10,5 @@
     <fullyQualifiedTypeName name="org.neodatis.odb.impl.core.query.criteria.CriteriaQuery"/>
     <fullyQualifiedTypeName name="java.math.BigInteger"/>
     <fullyQualifiedTypeName name="practica_neodatis.Pedido"/>
+    <fullyQualifiedTypeName name="java.text.DecimalFormat"/>
 </qualifiedTypeNameHistroy>
