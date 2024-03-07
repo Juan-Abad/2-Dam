@@ -11,4 +11,8 @@
     <fullyQualifiedTypeName name="java.math.BigInteger"/>
     <fullyQualifiedTypeName name="practica_neodatis.Pedido"/>
     <fullyQualifiedTypeName name="java.text.DecimalFormat"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.impl.core.query.values.ValuesCriteriaQuery"/>
+    <fullyQualifiedTypeName name="Venta"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="org.neodatis.odb.ObjectValues"/>
 </qualifiedTypeNameHistroy>
