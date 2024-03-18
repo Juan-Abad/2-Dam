@@ -14,20 +14,30 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import Datos.AccesoDatos;
+
 public class Main {
 
 	private static ODB odb;
 
 	public static void main(String[] args) {
 		odb = ODBFactory.open("examen_pruebaDB.odb");
-		//insertarBBDD_a_neodatis();
-		
+		// insertarBBDD_a_neodatis();
+
 		Consultas consultas = new Consultas(odb);
 		System.out.println(consultas.Calc_total_uds_vendidas());
 		System.out.println(consultas.Calc_venta_por_color());
-		for(ObjectValues obj: consultas.Producto_con_mayor_num_ventas()) {
+		for (ObjectValues obj : consultas.Producto_con_mayor_num_ventas()) {
 			System.out.println(obj.toString());
 		}
+		AccesoDatos.conectar("jdbc:sqlite:ventas.db"); //se conecta a la BBDD indicada
+		AccesoDatos.crearTabla(); //crea la tabla en la BBDD
+		for (Venta objeto_venta : consultas.obtenerBBDD()) {
+			AccesoDatos.insertarVenta(objeto_venta.getFecha(), objeto_venta.getProducto(), objeto_venta.getTalla(),
+					objeto_venta.getColor(), objeto_venta.getPrecio(), objeto_venta.getCantidad());
+			
+		}
+
 		odb.close();
 	}
 
@@ -58,7 +68,7 @@ public class Main {
 			}
 
 			for (Object obj : lista_ventas) {
-				//System.out.println(obj.toString());
+				// System.out.println(obj.toString());
 				odb.store(obj);
 			}
 		} catch (
@@ -78,9 +88,9 @@ public class Main {
 			return "";
 		}
 	}
-	
+
 	public static void insertarBBDD_a_SQLite() {
-		
+
 	}
 
 }

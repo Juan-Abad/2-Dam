@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import org.neodatis.odb.ODB;
 import org.neodatis.odb.ObjectValues;
+import org.neodatis.odb.Objects;
 import org.neodatis.odb.Values;
 import org.neodatis.odb.core.query.IValuesQuery;
 import org.neodatis.odb.impl.core.query.values.ValuesCriteriaQuery;
@@ -39,7 +40,10 @@ public class Consultas {
 		return lista;
 	}
 	
-	public Objects obtenerBBDD() {
-		
-	}
+	public ArrayList<Venta> obtenerBBDD() {
+        ArrayList<Venta> listaVentas = new ArrayList<>();
+        // Suponiendo que odb.getObjects() devuelve una lista de objetos de tipo Venta
+        listaVentas.addAll(odb.getObjects(Venta.class));
+        return listaVentas;
+    }
 }
