@@ -15,6 +15,7 @@ public class UDPcliente {
 		
 		//Direccion de destino
 		InetAddress destino=InetAddress.getByName("localhost");
+		System.out.println(destino);
 		//InetAddress destino=InetAddress.getByName("192.168.100.1 poner ip destino");  
 		//puerto de destino
 		int port=12345;
